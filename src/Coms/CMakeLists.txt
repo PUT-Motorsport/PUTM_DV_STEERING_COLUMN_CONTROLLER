@@ -1,13 +1,13 @@
-add_library(Coms "")
+add_library(Communication "")
 
-target_sources(Coms
+target_sources(Communication
   PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/Coms.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Communication.cpp
   PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/Coms.h
+    ${CMAKE_CURRENT_LIST_DIR}/Communication.h
   )
 
-target_include_directories(Coms
+target_include_directories(Communication
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
   )

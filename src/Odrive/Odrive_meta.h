@@ -28,7 +28,6 @@
 #define SET_POSITION_GAIN           0x01A
 #define SET_VEL_GAINS               0x01B 
 
-#define POSITION_CONTROL_MODE 3
-#define TRAP_TRAJ_MODE 5
-//define other later
-
+#define POSITION_CONTROL_MODE           3
+#define TRAP_TRAJ_MODE                  5
+#define GEAR_RATIO                     10

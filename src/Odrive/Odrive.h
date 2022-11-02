@@ -8,14 +8,16 @@ namespace Steering_Column
 {
     class T_Odrive{
         private:
-        //Odrive Data
-  
-        //Odrive Methods
+        //Data
+        int current_limit;
+        int vel_limit;;
+        int accel_limit;
+        int torque_limit;
+        //Methods
         bool is_odrive_alive() {return true;}
         float Get_Voltage();
         float Get_Current();
         void Set_Controller_Mode();
-        void Set_Position(float position);
         int Get_Encoder_Count();
         float Get_Position_Estimate();
 
@@ -40,6 +42,7 @@ namespace Steering_Column
         }current_state;
 
         void Startup_procedure();
+        void Set_Position(float position);
     };
 }
 
