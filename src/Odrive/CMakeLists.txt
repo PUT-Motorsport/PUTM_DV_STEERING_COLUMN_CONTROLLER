@@ -12,3 +12,5 @@ target_include_directories(Odrive
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
   )
+include_directories(src/Coms)
+

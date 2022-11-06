@@ -1,8 +1,9 @@
 #pragma once
 
 #include <iostream>
-
+#include <thread>
 #include "Odrive_meta.h"
+
 
 namespace Steering_Column
 {
@@ -14,7 +15,7 @@ namespace Steering_Column
         int accel_limit;
         int torque_limit;
         //Methods
-        bool is_odrive_alive() {return true;}
+        bool is_odrive_alive();
         float Get_Voltage();
         float Get_Current();
         void Set_Controller_Mode();

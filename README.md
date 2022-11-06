@@ -14,7 +14,7 @@ To control movement of front axle, we use a brushless motor coupled with a plane
 ## Control mode
 To control motion of front axle, Odrive uses a [position control mode](https://docs.odriverobotics.com/v/latest/getting-started.html#position-control) which utilize a trajectory controlled movements  
 ## Block Diagram  
-![Steering diagram drawio](https://user-images.githubusercontent.com/94369639/199510902-899165b5-9613-4063-826d-49a7b0a85bf9.png)  
+![Steering diagram drawio](https://user-images.githubusercontent.com/94369639/200168290-99d18f5c-e7f6-463f-bd13-2ad8af7affb6.png)
 ## Program flow
 Below is a simplified program execution scheme.  
-![Program_Flow drawio](https://user-images.githubusercontent.com/94369639/199070031-12969f94-0f53-4a5e-b548-c4fb82a09298.png)
+![Program_Flow drawio](https://user-images.githubusercontent.com/94369639/200168303-d1e4fad5-e9c7-4ecb-a140-466a336053f5.png)
