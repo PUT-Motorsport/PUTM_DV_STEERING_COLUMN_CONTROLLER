@@ -28,6 +28,7 @@ void Execute_new_command()
 {
     using namespace Communication; 
     Terminal_input new_cmd = grab_command();
+    
     if(new_cmd.cmd == "set")
     {
         odrive.Set_Position(new_cmd.value);
@@ -64,7 +65,8 @@ int main(int argc, char **argv)
 
             case Communication::semafora::STOP:
                 //End thread and go to idle
-
+                Loop->join();
+                delete Loop;
                 sem1.State = Communication::semafora::RUN_STATES::IDLING;
             break;
 
