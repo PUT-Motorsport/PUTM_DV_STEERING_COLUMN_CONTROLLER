@@ -1,0 +1,8 @@
+prefix=/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel
+
+Name: steering
+Description: Description of steering
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
