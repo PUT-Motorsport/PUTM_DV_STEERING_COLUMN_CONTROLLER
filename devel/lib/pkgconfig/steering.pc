@@ -3,6 +3,6 @@ prefix=/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel
 Name: steering
 Description: Description of steering
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/include
 Libs: -L${prefix}/lib 
 Requires: 

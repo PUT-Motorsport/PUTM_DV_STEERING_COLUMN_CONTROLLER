@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(steering_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT " " STREQUAL " ")
+if(NOT "/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/include " STREQUAL " ")
   set(steering_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel/lib;/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
