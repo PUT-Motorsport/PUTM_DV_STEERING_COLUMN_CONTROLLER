@@ -20,6 +20,8 @@ RUN apt-get install apt-utils
 #RUN cmake ../PUTM_DV_STEERING_COLUMN_CONTROLLER
 #RUN cmake --build .
 
-RUN cd home && git clone https://github.com/PUT-Motorsport/PUTM_DV_STEERING_COLUMN_CONTROLLER.git && cd PUTM_DV_STEERING_COLUMN_CONTROLLER && git switch ROS_container
-SHELL ["source" ,"/opt/ros/noetic/setup.bash"]
-SHELL ["catkin_make"]
+#RUN cd home && git clone https://github.com/PUT-Motorsport/PUTM_DV_STEERING_COLUMN_CONTROLLER.git && cd PUTM_DV_STEERING_COLUMN_CONTROLLER && git switch ROS_container
+#SHELL ["source" ,"/opt/ros/noetic/setup.bash"]
+#SHELL ["catkin_make"]
+
+

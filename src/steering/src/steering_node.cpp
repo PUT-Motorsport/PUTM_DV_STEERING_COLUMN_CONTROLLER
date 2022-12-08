@@ -1,6 +1,6 @@
-#include "Odrive/Odrive.h"
-#include "Coms/Communication.hpp"
-#include "Coms/Terminal.hpp"
+#include "Odrive.h"
+#include "Communication.hpp"
+#include "Terminal.hpp"
 
 #include <iostream>
 #include <string>

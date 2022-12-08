@@ -1,8 +1,8 @@
-prefix=/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel
+prefix=/home/putm/devel
 
 Name: steering
 Description: Description of steering
 Version: 0.0.0
-Cflags: -I/home/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/include
+Cflags: -I/home/putm/devel/include
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: roscpp rospy std_msgs message_runtime
