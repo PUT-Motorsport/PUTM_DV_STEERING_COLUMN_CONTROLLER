@@ -14,26 +14,19 @@ const _getByteLength = _ros_msg_utils.getByteLength;
 
 //-----------------------------------------------------------
 
-class Command {
+class input_mode {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.command = null;
-      this.state = null;
+      this.id = null;
       this.input_mode = null;
     }
     else {
-      if (initObj.hasOwnProperty('command')) {
-        this.command = initObj.command
+      if (initObj.hasOwnProperty('id')) {
+        this.id = initObj.id
       }
       else {
-        this.command = 0;
-      }
-      if (initObj.hasOwnProperty('state')) {
-        this.state = initObj.state
-      }
-      else {
-        this.state = 0;
+        this.id = 0;
       }
       if (initObj.hasOwnProperty('input_mode')) {
         this.input_mode = initObj.input_mode
@@ -45,48 +38,43 @@ class Command {
   }
 
   static serialize(obj, buffer, bufferOffset) {
-    // Serializes a message object of type Command
-    // Serialize message field [command]
-    bufferOffset = _serializer.int32(obj.command, buffer, bufferOffset);
-    // Serialize message field [state]
-    bufferOffset = _serializer.int32(obj.state, buffer, bufferOffset);
+    // Serializes a message object of type input_mode
+    // Serialize message field [id]
+    bufferOffset = _serializer.int32(obj.id, buffer, bufferOffset);
     // Serialize message field [input_mode]
     bufferOffset = _serializer.int32(obj.input_mode, buffer, bufferOffset);
     return bufferOffset;
   }
 
   static deserialize(buffer, bufferOffset=[0]) {
-    //deserializes a message object of type Command
+    //deserializes a message object of type input_mode
     let len;
-    let data = new Command(null);
-    // Deserialize message field [command]
-    data.command = _deserializer.int32(buffer, bufferOffset);
-    // Deserialize message field [state]
-    data.state = _deserializer.int32(buffer, bufferOffset);
+    let data = new input_mode(null);
+    // Deserialize message field [id]
+    data.id = _deserializer.int32(buffer, bufferOffset);
     // Deserialize message field [input_mode]
     data.input_mode = _deserializer.int32(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 12;
+    return 8;
   }
 
   static datatype() {
     // Returns string type for a message object
-    return 'steering/Command';
+    return 'steering/input_mode';
   }
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'a39bebcff88cc716167e57a675f085d3';
+    return 'c66a5f62b7a0de9706717ec3def6b7d9';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    int32 command
-    int32 state
+    int32 id
     int32 input_mode
     `;
   }
@@ -96,19 +84,12 @@ class Command {
     if (typeof msg !== 'object' || msg === null) {
       msg = {};
     }
-    const resolved = new Command(null);
-    if (msg.command !== undefined) {
-      resolved.command = msg.command;
+    const resolved = new input_mode(null);
+    if (msg.id !== undefined) {
+      resolved.id = msg.id;
     }
     else {
-      resolved.command = 0
-    }
-
-    if (msg.state !== undefined) {
-      resolved.state = msg.state;
-    }
-    else {
-      resolved.state = 0
+      resolved.id = 0
     }
 
     if (msg.input_mode !== undefined) {
@@ -122,4 +103,4 @@ class Command {
     }
 };
 
-module.exports = Command;
+module.exports = input_mode;

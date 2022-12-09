@@ -14,3 +14,5 @@ from ._Steering_loopActionResult import *
 from ._Steering_loopFeedback import *
 from ._Steering_loopGoal import *
 from ._Steering_loopResult import *
+from ._input_mode import *
+from ._requested_state import *

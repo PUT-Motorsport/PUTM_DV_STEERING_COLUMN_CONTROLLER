@@ -24,14 +24,27 @@ struct Command_
   typedef Command_<ContainerAllocator> Type;
 
   Command_()
-    {
+    : command(0)
+    , state(0)
+    , input_mode(0)  {
     }
   Command_(const ContainerAllocator& _alloc)
-    {
+    : command(0)
+    , state(0)
+    , input_mode(0)  {
   (void)_alloc;
     }
 
 
+
+   typedef int32_t _command_type;
+  _command_type command;
+
+   typedef int32_t _state_type;
+  _state_type state;
+
+   typedef int32_t _input_mode_type;
+  _input_mode_type input_mode;
 
 
 
@@ -56,6 +69,21 @@ std::ostream& operator<<(std::ostream& s, const ::steering::Command_<ContainerAl
 {
 ros::message_operations::Printer< ::steering::Command_<ContainerAllocator> >::stream(s, "", v);
 return s;
+}
+
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::steering::Command_<ContainerAllocator1> & lhs, const ::steering::Command_<ContainerAllocator2> & rhs)
+{
+  return lhs.command == rhs.command &&
+    lhs.state == rhs.state &&
+    lhs.input_mode == rhs.input_mode;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::steering::Command_<ContainerAllocator1> & lhs, const ::steering::Command_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
 }
 
 
@@ -106,12 +134,12 @@ struct MD5Sum< ::steering::Command_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "d41d8cd98f00b204e9800998ecf8427e";
+    return "a39bebcff88cc716167e57a675f085d3";
   }
 
   static const char* value(const ::steering::Command_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xd41d8cd98f00b204ULL;
-  static const uint64_t static_value2 = 0xe9800998ecf8427eULL;
+  static const uint64_t static_value1 = 0xa39bebcff88cc716ULL;
+  static const uint64_t static_value2 = 0x167e57a675f085d3ULL;
 };
 
 template<class ContainerAllocator>
@@ -130,7 +158,9 @@ struct Definition< ::steering::Command_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "\n"
+    return "int32 command\n"
+"int32 state\n"
+"int32 input_mode\n"
 ;
   }
 
@@ -147,8 +177,12 @@ namespace serialization
 
   template<class ContainerAllocator> struct Serializer< ::steering::Command_<ContainerAllocator> >
   {
-    template<typename Stream, typename T> inline static void allInOne(Stream&, T)
-    {}
+    template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
+    {
+      stream.next(m.command);
+      stream.next(m.state);
+      stream.next(m.input_mode);
+    }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
   }; // struct Command_
@@ -164,8 +198,15 @@ namespace message_operations
 template<class ContainerAllocator>
 struct Printer< ::steering::Command_<ContainerAllocator> >
 {
-  template<typename Stream> static void stream(Stream&, const std::string&, const ::steering::Command_<ContainerAllocator>&)
-  {}
+  template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::steering::Command_<ContainerAllocator>& v)
+  {
+    s << indent << "command: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.command);
+    s << indent << "state: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.state);
+    s << indent << "input_mode: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.input_mode);
+  }
 };
 
 } // namespace message_operations
