@@ -7,9 +7,14 @@
 ;//! \htmlinclude Odrive_command-request.msg.html
 
 (cl:defclass <Odrive_command-request> (roslisp-msg-protocol:ros-message)
-  ((send_command
-    :reader send_command
-    :initarg :send_command
+  ((command
+    :reader command
+    :initarg :command
+    :type cl:integer
+    :initform 0)
+   (value
+    :reader value
+    :initarg :value
     :type cl:integer
     :initform 0))
 )
@@ -22,13 +27,24 @@
   (cl:unless (cl:typep m 'Odrive_command-request)
     (roslisp-msg-protocol:msg-deprecation-warning "using old message class name steering-srv:<Odrive_command-request> is deprecated: use steering-srv:Odrive_command-request instead.")))
 
-(cl:ensure-generic-function 'send_command-val :lambda-list '(m))
-(cl:defmethod send_command-val ((m <Odrive_command-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:send_command-val is deprecated.  Use steering-srv:send_command instead.")
-  (send_command m))
+(cl:ensure-generic-function 'command-val :lambda-list '(m))
+(cl:defmethod command-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:command-val is deprecated.  Use steering-srv:command instead.")
+  (command m))
+
+(cl:ensure-generic-function 'value-val :lambda-list '(m))
+(cl:defmethod value-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:value-val is deprecated.  Use steering-srv:value instead.")
+  (value m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <Odrive_command-request>) ostream)
   "Serializes a message object of type '<Odrive_command-request>"
-  (cl:let* ((signed (cl:slot-value msg 'send_command)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 4294967296) signed)))
+  (cl:let* ((signed (cl:slot-value msg 'command)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 4294967296) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) unsigned) ostream)
+    )
+  (cl:let* ((signed (cl:slot-value msg 'value)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 4294967296) signed)))
     (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) unsigned) ostream)
@@ -42,7 +58,13 @@
       (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 16) unsigned) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) unsigned) (cl:read-byte istream))
-      (cl:setf (cl:slot-value msg 'send_command) (cl:if (cl:< unsigned 2147483648) unsigned (cl:- unsigned 4294967296))))
+      (cl:setf (cl:slot-value msg 'command) (cl:if (cl:< unsigned 2147483648) unsigned (cl:- unsigned 4294967296))))
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'value) (cl:if (cl:< unsigned 2147483648) unsigned (cl:- unsigned 4294967296))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<Odrive_command-request>)))
@@ -53,24 +75,26 @@
   "steering/Odrive_commandRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<Odrive_command-request>)))
   "Returns md5sum for a message object of type '<Odrive_command-request>"
-  "f759aa4a1410da240c4e7c85431387ba")
+  "91fd6849a5ae678705e41a8ee4fb22ea")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'Odrive_command-request)))
   "Returns md5sum for a message object of type 'Odrive_command-request"
-  "f759aa4a1410da240c4e7c85431387ba")
+  "91fd6849a5ae678705e41a8ee4fb22ea")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Odrive_command-request>)))
   "Returns full string definition for message of type '<Odrive_command-request>"
-  (cl:format cl:nil "int32 send_command~%~%~%"))
+  (cl:format cl:nil "int32 command~%int32 value~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Odrive_command-request)))
   "Returns full string definition for message of type 'Odrive_command-request"
-  (cl:format cl:nil "int32 send_command~%~%~%"))
+  (cl:format cl:nil "int32 command~%int32 value~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Odrive_command-request>))
   (cl:+ 0
+     4
      4
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <Odrive_command-request>))
   "Converts a ROS message object to a list"
   (cl:list 'Odrive_command-request
-    (cl:cons ':send_command (send_command msg))
+    (cl:cons ':command (command msg))
+    (cl:cons ':value (value msg))
 ))
 ;//! \htmlinclude Odrive_command-response.msg.html
 
@@ -121,10 +145,10 @@
   "steering/Odrive_commandResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<Odrive_command-response>)))
   "Returns md5sum for a message object of type '<Odrive_command-response>"
-  "f759aa4a1410da240c4e7c85431387ba")
+  "91fd6849a5ae678705e41a8ee4fb22ea")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'Odrive_command-response)))
   "Returns md5sum for a message object of type 'Odrive_command-response"
-  "f759aa4a1410da240c4e7c85431387ba")
+  "91fd6849a5ae678705e41a8ee4fb22ea")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Odrive_command-response>)))
   "Returns full string definition for message of type '<Odrive_command-response>"
   (cl:format cl:nil "int32 state~%~%~%"))

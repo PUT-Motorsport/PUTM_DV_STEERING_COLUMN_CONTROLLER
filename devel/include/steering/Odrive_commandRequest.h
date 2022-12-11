@@ -24,17 +24,22 @@ struct Odrive_commandRequest_
   typedef Odrive_commandRequest_<ContainerAllocator> Type;
 
   Odrive_commandRequest_()
-    : send_command(0)  {
+    : command(0)
+    , value(0)  {
     }
   Odrive_commandRequest_(const ContainerAllocator& _alloc)
-    : send_command(0)  {
+    : command(0)
+    , value(0)  {
   (void)_alloc;
     }
 
 
 
-   typedef int32_t _send_command_type;
-  _send_command_type send_command;
+   typedef int32_t _command_type;
+  _command_type command;
+
+   typedef int32_t _value_type;
+  _value_type value;
 
 
 
@@ -65,7 +70,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::steering::Odrive_commandRequest_<ContainerAllocator1> & lhs, const ::steering::Odrive_commandRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.send_command == rhs.send_command;
+  return lhs.command == rhs.command &&
+    lhs.value == rhs.value;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +128,12 @@ struct MD5Sum< ::steering::Odrive_commandRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "318ccb9b7dd0c12ef8e53afc5d8ee6d7";
+    return "ae937ab698a9cfa4cc9e4ad44e65496f";
   }
 
   static const char* value(const ::steering::Odrive_commandRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x318ccb9b7dd0c12eULL;
-  static const uint64_t static_value2 = 0xf8e53afc5d8ee6d7ULL;
+  static const uint64_t static_value1 = 0xae937ab698a9cfa4ULL;
+  static const uint64_t static_value2 = 0xcc9e4ad44e65496fULL;
 };
 
 template<class ContainerAllocator>
@@ -146,7 +152,8 @@ struct Definition< ::steering::Odrive_commandRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "int32 send_command\n"
+    return "int32 command\n"
+"int32 value\n"
 ;
   }
 
@@ -165,7 +172,8 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.send_command);
+      stream.next(m.command);
+      stream.next(m.value);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -184,8 +192,10 @@ struct Printer< ::steering::Odrive_commandRequest_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::steering::Odrive_commandRequest_<ContainerAllocator>& v)
   {
-    s << indent << "send_command: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.send_command);
+    s << indent << "command: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.command);
+    s << indent << "value: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.value);
   }
 };
 

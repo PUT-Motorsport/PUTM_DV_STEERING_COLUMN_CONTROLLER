@@ -15,8 +15,9 @@ void Read_Terminal_async()
 {
     for(;;)
     {
-        string input;
-        double value;
+        std::string input;
+        int value1;
+        int value2;
         
         cin >> input;
 
@@ -32,11 +33,12 @@ void Read_Terminal_async()
         }
         else if(input == "set")
         {
-            cin >> value;
-            cout << input << " " << value << endl;
-            new_command.cmd = "set";
-            new_command.value = value;
-
+            cin >> value1;
+            cin >> value2;
+            cout << input << " " << value1 << endl;
+            new_command.cmd = 1;
+            new_command.value1 = value1;
+            new_command.value2 = value2;
             sem1.State = Communication::semafora::RUN_STATES::CHANGE;
         }
     }

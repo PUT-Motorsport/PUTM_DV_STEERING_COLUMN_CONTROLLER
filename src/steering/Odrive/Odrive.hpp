@@ -2,13 +2,13 @@
 
 #include <iostream>
 #include <thread>
-#include "Odrive_meta.h"
-
+#include "/home/putm/src/steering/Coms/Communication.hpp"
 
 namespace Steering_Column
 {
     class T_Odrive{
         private:
+        roscom ros_handler;
         //Data
         int current_limit;
         int vel_limit;;
@@ -43,6 +43,7 @@ namespace Steering_Column
         }current_state;
 
         void Startup_procedure();
+        void Send_command(std::string command, int value1, int value2);
         void Set_Position(float position);
     };
 }

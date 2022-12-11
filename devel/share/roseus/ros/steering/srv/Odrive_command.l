@@ -20,37 +20,48 @@
 
 (defclass steering::Odrive_commandRequest
   :super ros::object
-  :slots (_send_command ))
+  :slots (_command _value ))
 
 (defmethod steering::Odrive_commandRequest
   (:init
    (&key
-    ((:send_command __send_command) 0)
+    ((:command __command) 0)
+    ((:value __value) 0)
     )
    (send-super :init)
-   (setq _send_command (round __send_command))
+   (setq _command (round __command))
+   (setq _value (round __value))
    self)
-  (:send_command
-   (&optional __send_command)
-   (if __send_command (setq _send_command __send_command)) _send_command)
+  (:command
+   (&optional __command)
+   (if __command (setq _command __command)) _command)
+  (:value
+   (&optional __value)
+   (if __value (setq _value __value)) _value)
   (:serialization-length
    ()
    (+
-    ;; int32 _send_command
+    ;; int32 _command
+    4
+    ;; int32 _value
     4
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; int32 _send_command
-       (write-long _send_command s)
+     ;; int32 _command
+       (write-long _command s)
+     ;; int32 _value
+       (write-long _value s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; int32 _send_command
-     (setq _send_command (sys::peek buf ptr- :integer)) (incf ptr- 4)
+   ;; int32 _command
+     (setq _command (sys::peek buf ptr- :integer)) (incf ptr- 4)
+   ;; int32 _value
+     (setq _value (sys::peek buf ptr- :integer)) (incf ptr- 4)
    ;;
    self)
   )
@@ -96,7 +107,7 @@
   :super ros::object
   :slots ())
 
-(setf (get steering::Odrive_command :md5sum-) "f759aa4a1410da240c4e7c85431387ba")
+(setf (get steering::Odrive_command :md5sum-) "91fd6849a5ae678705e41a8ee4fb22ea")
 (setf (get steering::Odrive_command :datatype-) "steering/Odrive_command")
 (setf (get steering::Odrive_command :request) steering::Odrive_commandRequest)
 (setf (get steering::Odrive_command :response) steering::Odrive_commandResponse)
@@ -104,24 +115,26 @@
 (defmethod steering::Odrive_commandRequest
   (:response () (instance steering::Odrive_commandResponse :init)))
 
-(setf (get steering::Odrive_commandRequest :md5sum-) "f759aa4a1410da240c4e7c85431387ba")
+(setf (get steering::Odrive_commandRequest :md5sum-) "91fd6849a5ae678705e41a8ee4fb22ea")
 (setf (get steering::Odrive_commandRequest :datatype-) "steering/Odrive_commandRequest")
 (setf (get steering::Odrive_commandRequest :definition-)
-      "int32 send_command
+      "int32 command
+int32 value
 ---
 int32 state
 ")
 
-(setf (get steering::Odrive_commandResponse :md5sum-) "f759aa4a1410da240c4e7c85431387ba")
+(setf (get steering::Odrive_commandResponse :md5sum-) "91fd6849a5ae678705e41a8ee4fb22ea")
 (setf (get steering::Odrive_commandResponse :datatype-) "steering/Odrive_commandResponse")
 (setf (get steering::Odrive_commandResponse :definition-)
-      "int32 send_command
+      "int32 command
+int32 value
 ---
 int32 state
 ")
 
 
 
-(provide :steering/Odrive_command "f759aa4a1410da240c4e7c85431387ba")
+(provide :steering/Odrive_command "91fd6849a5ae678705e41a8ee4fb22ea")
 
 

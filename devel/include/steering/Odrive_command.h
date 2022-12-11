@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::steering::Odrive_command > {
   static const char* value()
   {
-    return "f759aa4a1410da240c4e7c85431387ba";
+    return "91fd6849a5ae678705e41a8ee4fb22ea";
   }
 
   static const char* value(const ::steering::Odrive_command&) { return value(); }

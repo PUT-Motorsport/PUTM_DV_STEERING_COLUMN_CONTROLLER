@@ -8,7 +8,8 @@ namespace Communication{
 
 struct Terminal_input{
     std::string cmd;
-    double value;
+    double value1;
+    double value2;
 };
 
 struct semafora{

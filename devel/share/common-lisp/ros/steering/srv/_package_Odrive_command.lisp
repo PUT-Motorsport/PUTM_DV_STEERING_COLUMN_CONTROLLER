@@ -1,6 +1,8 @@
 (cl:in-package steering-srv)
-(cl:export '(SEND_COMMAND-VAL
-          SEND_COMMAND
+(cl:export '(COMMAND-VAL
+          COMMAND
+          VALUE-VAL
+          VALUE
           STATE-VAL
           STATE
 ))

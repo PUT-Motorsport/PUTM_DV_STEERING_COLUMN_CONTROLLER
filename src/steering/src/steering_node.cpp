@@ -1,4 +1,4 @@
-#include "Odrive.h"
+#include "Odrive.hpp"
 #include "Communication.hpp"
 #include "Terminal.hpp"
 
@@ -31,7 +31,12 @@ void Execute_new_command()
     
     if(new_cmd.cmd == "set")
     {
-        odrive.Set_Position(new_cmd.value);
+        odrive.Set_Position(new_cmd.value1);
+    }
+    //raw input for debug only.
+    else if(new_cmd.cmd == "send")
+    {
+        odrive.Send_command(new_cmd.cmd, new_cmd.value1, new_cmd.value2);
     }
     sem1.State = semafora::IDLING;
 }

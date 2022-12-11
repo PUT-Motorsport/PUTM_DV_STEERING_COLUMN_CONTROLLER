@@ -71,8 +71,15 @@ add_action_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
-  actionlib_msgs
-)
+  actionlib_msgs)
+
+  catkin_package(
+    #INCLUDE_DIRS include
+    #LIBRARIES ${PROJECT_NAME}
+    CATKIN_DEPENDS roscpp std_msgs message_runtime
+    #DEPENDS eigen opencv
+    )
+
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -129,7 +136,7 @@ add_subdirectory(Coms)
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/steering_node.cpp)
+add_executable(${PROJECT_NAME}_node src/steering_node.cpp Coms/Communication.cpp Odrive/Odrive.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
