@@ -21,6 +21,7 @@ namespace Steering_Column
         void Set_Controller_Mode();
         int Get_Encoder_Count();
         float Get_Position_Estimate();
+        void Send_command();
 
         public:
         T_Odrive()
@@ -43,7 +44,7 @@ namespace Steering_Column
         }current_state;
 
         void Startup_procedure();
-        void Send_command(std::string command, int value1, int value2);
+        void Process_command(double *args);
         void Set_Position(float position);
     };
 }

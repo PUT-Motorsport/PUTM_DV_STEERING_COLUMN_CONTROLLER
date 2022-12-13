@@ -1,8 +1,6 @@
 
 "use strict";
 
-let input_mode = require('./input_mode.js');
-let requested_state = require('./requested_state.js');
 let Action1ActionGoal = require('./Action1ActionGoal.js');
 let Action1ActionResult = require('./Action1ActionResult.js');
 let Steering_loopResult = require('./Steering_loopResult.js');
@@ -19,8 +17,6 @@ let Steering_loopActionResult = require('./Steering_loopActionResult.js');
 let Action1Action = require('./Action1Action.js');
 
 module.exports = {
-  input_mode: input_mode,
-  requested_state: requested_state,
   Action1ActionGoal: Action1ActionGoal,
   Action1ActionResult: Action1ActionResult,
   Steering_loopResult: Steering_loopResult,

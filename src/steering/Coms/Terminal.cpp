@@ -1,4 +1,5 @@
 #include "Terminal.hpp"
+#include "/home/putm/src/steering/Odrive/Odrive.hpp"
 
 using namespace boost::asio;
 using namespace std;
@@ -6,9 +7,11 @@ using namespace std;
 Communication::semafora sem1;
 Communication::Terminal_input new_command;
 
-Communication::Terminal_input grab_command()
+static double args[2] = {new_command.value1, new_command.value2};
+
+double* grab_command()
 {
-    return new_command;
+    return args;
 }
 
 void Read_Terminal_async()
@@ -16,8 +19,8 @@ void Read_Terminal_async()
     for(;;)
     {
         std::string input;
-        int value1;
-        int value2;
+        double value1;
+        double value2;
         
         cin >> input;
 
@@ -31,15 +34,31 @@ void Read_Terminal_async()
             cout << input << endl;
             sem1.State = Communication::semafora::RUN_STATES::STOP;
         }
-        else if(input == "set")
+        else if(input == "setstate")
         {
-            cin >> value1;
-            cin >> value2;
-            cout << input << " " << value1 << endl;
+            cin >> args[0];
+            cin >> args[1];
+            cout << input << " " << args[0] << " " << args[1] << endl;
+            //tablica zamiast struktury/
             new_command.cmd = 1;
-            new_command.value1 = value1;
-            new_command.value2 = value2;
             sem1.State = Communication::semafora::RUN_STATES::CHANGE;
         }
     }
+}
+void Execute_new_command()
+{
+    using namespace Communication; 
+   // Terminal_input new_cmd = grab_command();
+    /*
+    if(new_cmd.cmd == "set")
+    {
+        odrive.Set_Position(new_cmd.value1);
+    }
+    //raw input for debug only.
+    else if(new_cmd.cmd == "send")
+    {
+        odrive.Send_command(new_cmd.cmd, new_cmd.value1, new_cmd.value2);
+    }
+    sem1.State = semafora::IDLING;
+    */
 }

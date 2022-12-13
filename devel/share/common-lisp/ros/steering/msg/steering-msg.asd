@@ -34,8 +34,4 @@
     (:file "_package_Steering_loopGoal" :depends-on ("_package"))
     (:file "Steering_loopResult" :depends-on ("_package_Steering_loopResult"))
     (:file "_package_Steering_loopResult" :depends-on ("_package"))
-    (:file "input_mode" :depends-on ("_package_input_mode"))
-    (:file "_package_input_mode" :depends-on ("_package"))
-    (:file "requested_state" :depends-on ("_package_requested_state"))
-    (:file "_package_requested_state" :depends-on ("_package"))
   ))

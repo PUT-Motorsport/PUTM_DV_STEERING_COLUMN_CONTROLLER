@@ -13,39 +13,17 @@ using namespace std;
 
 extern Communication::semafora sem1;
 
-Steering_Column::T_Odrive odrive;
-
-void Controll_Loop()
-{
-    while(sem1.State == Communication::semafora::RUNNING)
-    {
-        cout << "Controlling" << endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    }
-}
-
-void Execute_new_command()
-{
-    using namespace Communication; 
-    Terminal_input new_cmd = grab_command();
-    
-    if(new_cmd.cmd == "set")
-    {
-        odrive.Set_Position(new_cmd.value1);
-    }
-    //raw input for debug only.
-    else if(new_cmd.cmd == "send")
-    {
-        odrive.Send_command(new_cmd.cmd, new_cmd.value1, new_cmd.value2);
-    }
-    sem1.State = semafora::IDLING;
-}
+void Controll_Loop();
 
 int main(int argc, char **argv)
 {
     
     thread Read(Read_Terminal_async);
     thread *Loop;
+
+    ros::init(argc, argv, "steering_node");
+
+    Steering_Column::T_Odrive odrive;
 
     for(;;)
     {
@@ -60,7 +38,6 @@ int main(int argc, char **argv)
                 //Creates new thread which runs a controll loop. Then change state to RUNNING.
                 sem1.State = Communication::semafora::RUN_STATES::RUNNING;
                 Loop = new thread(Controll_Loop);
-
             break;
 
             case Communication::semafora::RUNNING:
@@ -76,12 +53,19 @@ int main(int argc, char **argv)
             break;
 
             case Communication::semafora::CHANGE:
-
-                Execute_new_command();
+                odrive.Process_command(grab_command());
                 sem1.State = Communication::semafora::RUN_STATES::IDLING;
-
             break;
         }
         std::this_thread::sleep_for(std::chrono::seconds(2));
+    }
+}
+void Controll_Loop()
+{
+    while(sem1.State == Communication::semafora::RUNNING)
+    {
+        cout << "Controlling" << endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        ros::spinOnce();
     }
 }

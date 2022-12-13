@@ -27,4 +27,5 @@ struct semafora{
 }
 
 void Read_Terminal_async();
-Communication::Terminal_input grab_command();
+void Execute_new_command();
+double* grab_command();
