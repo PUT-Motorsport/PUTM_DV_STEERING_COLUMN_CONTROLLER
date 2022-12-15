@@ -9,7 +9,7 @@ class roscom{
 
     ros::NodeHandle n;
     ros::ServiceClient CAN_Client = n.serviceClient<steering::Odrive_command>("sending_commands");
-    ros::ServiceServer da_receiver = n.advertiseService("receiving_d_a",&roscom::receiving_da_callback, this);
+    //ros::ServiceServer da_receiver = n.advertiseService("receiving_d_a",&roscom::receiving_da_callback, this);
     steering::Odrive_command srv;
 
     public:

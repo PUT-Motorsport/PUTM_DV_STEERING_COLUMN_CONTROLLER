@@ -5,9 +5,14 @@ void roscom::Send_command(int command, int value)
 {
     srv.request.command = command;
     srv.request.value = value;
+    ROS_INFO("Sending...");
     if (CAN_Client.call(srv))
     {
         ROS_INFO("ok");
+    }
+    else
+    {
+        ROS_INFO("Failed");
     }
 }
 void roscom::Send_new_position(float new_position)
