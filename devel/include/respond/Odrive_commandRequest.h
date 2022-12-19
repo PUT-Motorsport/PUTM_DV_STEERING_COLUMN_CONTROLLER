@@ -25,11 +25,11 @@ struct Odrive_commandRequest_
 
   Odrive_commandRequest_()
     : command(0)
-    , value(0)  {
+    , values()  {
     }
   Odrive_commandRequest_(const ContainerAllocator& _alloc)
     : command(0)
-    , value(0)  {
+    , values(_alloc)  {
   (void)_alloc;
     }
 
@@ -38,8 +38,8 @@ struct Odrive_commandRequest_
    typedef int32_t _command_type;
   _command_type command;
 
-   typedef int32_t _value_type;
-  _value_type value;
+   typedef std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> _values_type;
+  _values_type values;
 
 
 
@@ -71,7 +71,7 @@ template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::respond::Odrive_commandRequest_<ContainerAllocator1> & lhs, const ::respond::Odrive_commandRequest_<ContainerAllocator2> & rhs)
 {
   return lhs.command == rhs.command &&
-    lhs.value == rhs.value;
+    lhs.values == rhs.values;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -104,12 +104,12 @@ struct IsMessage< ::respond::Odrive_commandRequest_<ContainerAllocator> const>
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::respond::Odrive_commandRequest_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::respond::Odrive_commandRequest_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -128,12 +128,12 @@ struct MD5Sum< ::respond::Odrive_commandRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "ae937ab698a9cfa4cc9e4ad44e65496f";
+    return "a6b43d426bfd3f44e42ee21d5f192930";
   }
 
   static const char* value(const ::respond::Odrive_commandRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xae937ab698a9cfa4ULL;
-  static const uint64_t static_value2 = 0xcc9e4ad44e65496fULL;
+  static const uint64_t static_value1 = 0xa6b43d426bfd3f44ULL;
+  static const uint64_t static_value2 = 0xe42ee21d5f192930ULL;
 };
 
 template<class ContainerAllocator>
@@ -153,7 +153,7 @@ struct Definition< ::respond::Odrive_commandRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "int32 command\n"
-"int32 value\n"
+"float64[] values\n"
 ;
   }
 
@@ -173,7 +173,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.command);
-      stream.next(m.value);
+      stream.next(m.values);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -194,8 +194,12 @@ struct Printer< ::respond::Odrive_commandRequest_<ContainerAllocator> >
   {
     s << indent << "command: ";
     Printer<int32_t>::stream(s, indent + "  ", v.command);
-    s << indent << "value: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.value);
+    s << indent << "values[]" << std::endl;
+    for (size_t i = 0; i < v.values.size(); ++i)
+    {
+      s << indent << "  values[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.values[i]);
+    }
   }
 };
 

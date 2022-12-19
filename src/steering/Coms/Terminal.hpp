@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include <string>
+#include "vector"
 
 namespace Communication{
 
@@ -28,4 +29,4 @@ struct semafora{
 
 void Read_Terminal_async();
 void Execute_new_command();
-double* grab_command();
+std::vector<double> grab_command();

@@ -7,9 +7,9 @@ using namespace std;
 Communication::semafora sem1;
 Communication::Terminal_input new_command;
 
-static double args[2] = {new_command.value1, new_command.value2};
+std::vector<double> args;
 
-double* grab_command()
+std::vector<double> grab_command()
 {
     return args;
 }
@@ -19,8 +19,6 @@ void Read_Terminal_async()
     for(;;)
     {
         std::string input;
-        double value1;
-        double value2;
         
         cin >> input;
 
@@ -36,9 +34,14 @@ void Read_Terminal_async()
         }
         else if(input == "setstate")
         {
-            cin >> args[0];
-            cin >> args[1];
-            cout << input << " " << args[0] << " " << args[1] << endl;
+            args.clear();
+            for(int i=0; i<3;i++)
+            {
+                double a;
+                cin >> a;
+                args.push_back(a);
+            }
+            cout << input << " " << args[0] << " " << args[1] << " " << args[2] << endl;
             //tablica zamiast struktury/
             new_command.cmd = 1;
             sem1.State = Communication::semafora::RUN_STATES::CHANGE;

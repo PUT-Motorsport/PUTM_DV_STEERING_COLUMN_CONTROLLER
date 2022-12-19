@@ -1,8 +1,30 @@
 (cl:in-package steering-srv)
 (cl:export '(COMMAND-VAL
           COMMAND
-          VALUE-VAL
-          VALUE
-          STATE-VAL
-          STATE
+          VALUES-VAL
+          VALUES
+          AXIS_ERROR-VAL
+          AXIS_ERROR
+          AXIS_STATE-VAL
+          AXIS_STATE
+          ACTIVE_ERRORS-VAL
+          ACTIVE_ERRORS
+          DISARM_REASON-VAL
+          DISARM_REASON
+          POS_ESTIMATE-VAL
+          POS_ESTIMATE
+          VEL_ESTIMATE-VAL
+          VEL_ESTIMATE
+          IQ_SETPOINT-VAL
+          IQ_SETPOINT
+          IQ_MEASURED-VAL
+          IQ_MEASURED
+          FET_TEMPERATURE-VAL
+          FET_TEMPERATURE
+          MOTOR_TEMPERATURE-VAL
+          MOTOR_TEMPERATURE
+          VBUS_VOLTAGE-VAL
+          VBUS_VOLTAGE
+          VBUS_CURRENT-VAL
+          VBUS_CURRENT
 ))

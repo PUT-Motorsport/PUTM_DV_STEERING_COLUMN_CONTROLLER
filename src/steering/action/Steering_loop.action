@@ -1,5 +1,5 @@
 # Define the goal
-float32 new_position  # Specify which dishwasher we want to use
+float32 new_position
 ---
 # Define the result
 bool movement_done

@@ -13,6 +13,9 @@ using namespace std;
 
 extern Communication::semafora sem1;
 
+Steering_Column::T_Odrive *odrive;
+
+
 void Controll_Loop();
 
 int main(int argc, char **argv)
@@ -23,7 +26,7 @@ int main(int argc, char **argv)
 
     ros::init(argc, argv, "steering_node");
 
-    Steering_Column::T_Odrive odrive;
+    odrive = new Steering_Column::T_Odrive;
 
     for(;;)
     {
@@ -53,7 +56,7 @@ int main(int argc, char **argv)
             break;
 
             case Communication::semafora::CHANGE:
-                odrive.Process_command(grab_command());
+                odrive->Send_command(grab_command());
                 sem1.State = Communication::semafora::RUN_STATES::IDLING;
             break;
         }
@@ -65,7 +68,12 @@ void Controll_Loop()
     while(sem1.State == Communication::semafora::RUNNING)
     {
         cout << "Controlling" << endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
         ros::spinOnce();
+        float desired_steer_angle = odrive->ros_handler.srv_angle.request.desired_steer_angle;
+
+        double new_angle;
+        odrive->Set_Position(new_angle);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }

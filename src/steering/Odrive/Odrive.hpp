@@ -2,18 +2,20 @@
 
 #include <iostream>
 #include <thread>
+#include "/home/putm/src/steering/Coms/Terminal.hpp"
 #include "/home/putm/src/steering/Coms/Communication.hpp"
+#include "vector"
 
 namespace Steering_Column
 {
     class T_Odrive{
         private:
-        roscom ros_handler;
         //Data
         int current_limit;
         int vel_limit;;
         int accel_limit;
         int torque_limit;
+        float desired_steer_angle;
         //Methods
         bool is_odrive_alive();
         float Get_Voltage();
@@ -21,9 +23,10 @@ namespace Steering_Column
         void Set_Controller_Mode();
         int Get_Encoder_Count();
         float Get_Position_Estimate();
-        void Send_command();
 
         public:
+        roscom ros_handler;
+
         T_Odrive()
         {
             if(is_odrive_alive() == true)
@@ -44,8 +47,8 @@ namespace Steering_Column
         }current_state;
 
         void Startup_procedure();
-        void Process_command(double *args);
-        void Set_Position(float position);
+        void Send_command(std::vector<double> args);
+        void Set_Position(double position);
     };
 }
 

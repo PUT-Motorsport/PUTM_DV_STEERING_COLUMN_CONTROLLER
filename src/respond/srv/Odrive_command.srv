@@ -1,4 +1,15 @@
 int32 command
-int32 value
+float64[] values
 ---
-int32 state
+int32 Axis_Error
+int8 Axis_State
+int32 Active_Errors
+int32 Disarm_Reason
+int32 Pos_Estimate
+int32 Vel_Estimate
+int32 Iq_Setpoint
+int32 Iq_Measured
+int32 FET_Temperature
+int32 Motor_Temperature
+int32 Vbus_Voltage
+int32 Vbus_Current

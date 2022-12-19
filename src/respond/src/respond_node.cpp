@@ -26,6 +26,5 @@ int main(int argc, char **argv)
     ros::ServiceServer service = n.advertiseService("sending_commands", receiving_da_callback);
     ROS_INFO("Ready for service");
     ros::spin();
-
     return 0;
 }
