@@ -14,6 +14,7 @@ using namespace std;
 Communication::semafora sem1;
 Communication::roscom *ROS_Handler;
 Steering_Column::T_Odrive Odrive;
+Communication::Common_Space Shared_Variables; 
 
 
 void Controll_Loop();
@@ -70,11 +71,12 @@ void Controll_Loop()
         //1.Wait for dsa.
         cout << "Waiting for dsa" << endl;
         ros::spin();
+        //Start timer to measure loop time.
         Odrive.current_state = Steering_Column::T_Odrive::Odrive_states::RUNNING;
         //2.Send new value 
-        Odrive.Set_Position(Odrive.Calculate_Displacement(ROS_Handler->srv_angle.request.desired_steer_angle));  
+        Odrive.Set_Position(Odrive.Calculate_Displacement(Shared_Variables.Desired_Steer_angle));  
         //3.Wait for finish.
-
+        
         //4.Send 'move completed' info.
         Odrive.current_state = Steering_Column::T_Odrive::Odrive_states::IDLING;  
     }

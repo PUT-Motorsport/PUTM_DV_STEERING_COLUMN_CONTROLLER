@@ -13,24 +13,25 @@
 
 #include "/home/putm/src/steering/Odrive/Odrive.hpp"
 
+typedef actionlib::SimpleActionClient<steering::Steering_loopAction> Client;
+
 namespace Communication{
+    struct Common_Space{
+        double Desired_Steer_angle;
+        bool Armed;
+    };
 
 class roscom{
     private:
-
-    static double desired_steer_angle;
-
+    
     ros::NodeHandle n;
     ros::ServiceClient CAN_Client = n.serviceClient<steering::Odrive_command>("sending_commands");
     ros::ServiceServer da_receiver = n.advertiseService("receiving_d_a",&roscom::receiving_da_callback, this);
-    actionlib::SimpleActionClient<steering::Steering_loopAction> *ac;
-
-    double inline return_desired_steer_angle(){return desired_steer_angle;}
+    Client ac;
 
     public:
-    roscom()
+    roscom() : ac("steering", true)
     {
-        ac = new actionlib::SimpleActionClient<steering::Steering_loopAction>("steer", true);
         ROS_INFO("Waiting for action server to start.");
         //ac->waitForServer();
     }
@@ -38,9 +39,13 @@ class roscom{
     steering::Desired_angle srv_angle;
 
     void Send_command(std::vector<double> args);
-    void Send_new_position(double position);
+    void Send_new_position(double new_position);
 
     bool receiving_da_callback(steering::Desired_angle::Request &req, steering::Desired_angle::Response &resp);
 
+    void activeCb();
+    void feedbackCb(const steering::Steering_loopFeedbackConstPtr& feedback);
+    void doneCb(const actionlib::SimpleClientGoalState& state,
+                const steering::Steering_loopResultConstPtr& result);
 };
 }
