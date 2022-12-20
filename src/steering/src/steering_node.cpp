@@ -11,9 +11,9 @@
 
 using namespace std;
 
-extern Communication::semafora sem1;
-
-Steering_Column::T_Odrive *odrive;
+Communication::semafora sem1;
+Communication::roscom *ROS_Handler;
+Steering_Column::T_Odrive Odrive;
 
 
 void Controll_Loop();
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     ros::init(argc, argv, "steering_node");
 
-    odrive = new Steering_Column::T_Odrive;
+    ROS_Handler = new Communication::roscom;
 
     for(;;)
     {
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
             break;
 
             case Communication::semafora::CHANGE:
-                odrive->Send_command(grab_command());
+                Odrive.Send_command(grab_command());
                 sem1.State = Communication::semafora::RUN_STATES::IDLING;
             break;
         }
@@ -67,13 +67,15 @@ void Controll_Loop()
 {
     while(sem1.State == Communication::semafora::RUNNING)
     {
-        cout << "Controlling" << endl;
-        ros::spinOnce();
-        float desired_steer_angle = odrive->ros_handler.srv_angle.request.desired_steer_angle;
+        //1.Wait for dsa.
+        cout << "Waiting for dsa" << endl;
+        ros::spin();
+        Odrive.current_state = Steering_Column::T_Odrive::Odrive_states::RUNNING;
+        //2.Send new value 
+        Odrive.Set_Position(Odrive.Calculate_Displacement(ROS_Handler->srv_angle.request.desired_steer_angle));  
+        //3.Wait for finish.
 
-        double new_angle;
-        odrive->Set_Position(new_angle);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        //4.Send 'move completed' info.
+        Odrive.current_state = Steering_Column::T_Odrive::Odrive_states::IDLING;  
     }
 }

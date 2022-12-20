@@ -11,6 +11,10 @@
 
 #include <actionlib/client/simple_action_client.h>
 
+#include "/home/putm/src/steering/Odrive/Odrive.hpp"
+
+namespace Communication{
+
 class roscom{
     private:
 
@@ -39,3 +43,4 @@ class roscom{
     bool receiving_da_callback(steering::Desired_angle::Request &req, steering::Desired_angle::Response &resp);
 
 };
+}

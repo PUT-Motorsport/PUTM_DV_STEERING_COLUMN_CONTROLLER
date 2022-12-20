@@ -25,8 +25,6 @@ namespace Steering_Column
         float Get_Position_Estimate();
 
         public:
-        roscom ros_handler;
-
         T_Odrive()
         {
             if(is_odrive_alive() == true)
@@ -49,6 +47,7 @@ namespace Steering_Column
         void Startup_procedure();
         void Send_command(std::vector<double> args);
         void Set_Position(double position);
+        double Calculate_Displacement(double desired_steer_angle);
     };
 }
 
