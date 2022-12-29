@@ -1,5 +1,5 @@
 #include "Terminal.hpp"
-#include "/home/putm/src/steering/Odrive/Odrive.hpp"
+#include "/home/putm/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/Odrive/Odrive.hpp"
 #include "Odrive_meta.h"
 
 using namespace boost::asio;
@@ -35,15 +35,20 @@ void Read_Terminal_async()
         else if(input == "setstate")
         {
             args.clear();
-            args.push_back(SET_AXIS_REQUESTED_STATE);
+            args.push_back((double)(SET_AXIS_REQUESTED_STATE));
             
             double a;
             cin >> a;
             args.push_back(a);
     
             cout << input << " " << args[0] << " " << args[1] << endl;
-            //tablica zamiast struktury/
             sem1.State = Communication::semafora::RUN_STATES::CHANGE;
+        }
+        else if(input == "exit")
+        {
+            cout << input << endl;
+            sem1.State = Communication::semafora::RUN_STATES::STOP;
+            break;
         }
     }
 }

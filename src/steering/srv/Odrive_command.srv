@@ -1,4 +1,4 @@
-int32 command
+float64 command
 float64[] values
 ---
 int32 Axis_Error

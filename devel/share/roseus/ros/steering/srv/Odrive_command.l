@@ -25,11 +25,11 @@
 (defmethod steering::Odrive_commandRequest
   (:init
    (&key
-    ((:command __command) 0)
+    ((:command __command) 0.0)
     ((:values __values) (make-array 0 :initial-element 0.0 :element-type :float))
     )
    (send-super :init)
-   (setq _command (round __command))
+   (setq _command (float __command))
    (setq _values __values)
    self)
   (:command
@@ -41,8 +41,8 @@
   (:serialization-length
    ()
    (+
-    ;; int32 _command
-    4
+    ;; float64 _command
+    8
     ;; float64[] _values
     (* 8    (length _values)) 4
     ))
@@ -50,8 +50,8 @@
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; int32 _command
-       (write-long _command s)
+     ;; float64 _command
+       (sys::poke _command (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;; float64[] _values
      (write-long (length _values) s)
      (dotimes (i (length _values))
@@ -61,8 +61,8 @@
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; int32 _command
-     (setq _command (sys::peek buf ptr- :integer)) (incf ptr- 4)
+   ;; float64 _command
+     (setq _command (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;; float64[] _values
    (let (n)
      (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4)
@@ -237,7 +237,7 @@
   :super ros::object
   :slots ())
 
-(setf (get steering::Odrive_command :md5sum-) "490a95e9f7999f7ded62b1edb2bf95f8")
+(setf (get steering::Odrive_command :md5sum-) "58b88c37419d5be4e900c845f70ccf1e")
 (setf (get steering::Odrive_command :datatype-) "steering/Odrive_command")
 (setf (get steering::Odrive_command :request) steering::Odrive_commandRequest)
 (setf (get steering::Odrive_command :response) steering::Odrive_commandResponse)
@@ -245,10 +245,10 @@
 (defmethod steering::Odrive_commandRequest
   (:response () (instance steering::Odrive_commandResponse :init)))
 
-(setf (get steering::Odrive_commandRequest :md5sum-) "490a95e9f7999f7ded62b1edb2bf95f8")
+(setf (get steering::Odrive_commandRequest :md5sum-) "58b88c37419d5be4e900c845f70ccf1e")
 (setf (get steering::Odrive_commandRequest :datatype-) "steering/Odrive_commandRequest")
 (setf (get steering::Odrive_commandRequest :definition-)
-      "int32 command
+      "float64 command
 float64[] values
 ---
 int32 Axis_Error
@@ -265,10 +265,10 @@ int32 Vbus_Voltage
 int32 Vbus_Current
 ")
 
-(setf (get steering::Odrive_commandResponse :md5sum-) "490a95e9f7999f7ded62b1edb2bf95f8")
+(setf (get steering::Odrive_commandResponse :md5sum-) "58b88c37419d5be4e900c845f70ccf1e")
 (setf (get steering::Odrive_commandResponse :datatype-) "steering/Odrive_commandResponse")
 (setf (get steering::Odrive_commandResponse :definition-)
-      "int32 command
+      "float64 command
 float64[] values
 ---
 int32 Axis_Error
@@ -287,6 +287,6 @@ int32 Vbus_Current
 
 
 
-(provide :steering/Odrive_command "490a95e9f7999f7ded62b1edb2bf95f8")
+(provide :steering/Odrive_command "58b88c37419d5be4e900c845f70ccf1e")
 
 

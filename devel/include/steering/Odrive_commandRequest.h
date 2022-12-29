@@ -24,18 +24,18 @@ struct Odrive_commandRequest_
   typedef Odrive_commandRequest_<ContainerAllocator> Type;
 
   Odrive_commandRequest_()
-    : command(0)
+    : command(0.0)
     , values()  {
     }
   Odrive_commandRequest_(const ContainerAllocator& _alloc)
-    : command(0)
+    : command(0.0)
     , values(_alloc)  {
   (void)_alloc;
     }
 
 
 
-   typedef int32_t _command_type;
+   typedef double _command_type;
   _command_type command;
 
    typedef std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> _values_type;
@@ -128,12 +128,12 @@ struct MD5Sum< ::steering::Odrive_commandRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "a6b43d426bfd3f44e42ee21d5f192930";
+    return "5790ab1847ff74173b054431da19345c";
   }
 
   static const char* value(const ::steering::Odrive_commandRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xa6b43d426bfd3f44ULL;
-  static const uint64_t static_value2 = 0xe42ee21d5f192930ULL;
+  static const uint64_t static_value1 = 0x5790ab1847ff7417ULL;
+  static const uint64_t static_value2 = 0x3b054431da19345cULL;
 };
 
 template<class ContainerAllocator>
@@ -152,7 +152,7 @@ struct Definition< ::steering::Odrive_commandRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "int32 command\n"
+    return "float64 command\n"
 "float64[] values\n"
 ;
   }
@@ -193,7 +193,7 @@ struct Printer< ::steering::Odrive_commandRequest_<ContainerAllocator> >
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::steering::Odrive_commandRequest_<ContainerAllocator>& v)
   {
     s << indent << "command: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.command);
+    Printer<double>::stream(s, indent + "  ", v.command);
     s << indent << "values[]" << std::endl;
     for (size_t i = 0; i < v.values.size(); ++i)
     {

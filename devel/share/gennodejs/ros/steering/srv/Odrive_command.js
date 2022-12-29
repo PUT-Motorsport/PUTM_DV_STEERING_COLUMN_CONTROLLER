@@ -29,7 +29,7 @@ class Odrive_commandRequest {
         this.command = initObj.command
       }
       else {
-        this.command = 0;
+        this.command = 0.0;
       }
       if (initObj.hasOwnProperty('values')) {
         this.values = initObj.values
@@ -43,7 +43,7 @@ class Odrive_commandRequest {
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type Odrive_commandRequest
     // Serialize message field [command]
-    bufferOffset = _serializer.int32(obj.command, buffer, bufferOffset);
+    bufferOffset = _serializer.float64(obj.command, buffer, bufferOffset);
     // Serialize message field [values]
     bufferOffset = _arraySerializer.float64(obj.values, buffer, bufferOffset, null);
     return bufferOffset;
@@ -54,7 +54,7 @@ class Odrive_commandRequest {
     let len;
     let data = new Odrive_commandRequest(null);
     // Deserialize message field [command]
-    data.command = _deserializer.int32(buffer, bufferOffset);
+    data.command = _deserializer.float64(buffer, bufferOffset);
     // Deserialize message field [values]
     data.values = _arrayDeserializer.float64(buffer, bufferOffset, null)
     return data;
@@ -63,7 +63,7 @@ class Odrive_commandRequest {
   static getMessageSize(object) {
     let length = 0;
     length += 8 * object.values.length;
-    return length + 8;
+    return length + 12;
   }
 
   static datatype() {
@@ -73,13 +73,13 @@ class Odrive_commandRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'a6b43d426bfd3f44e42ee21d5f192930';
+    return '5790ab1847ff74173b054431da19345c';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    int32 command
+    float64 command
     float64[] values
     
     `;
@@ -95,7 +95,7 @@ class Odrive_commandRequest {
       resolved.command = msg.command;
     }
     else {
-      resolved.command = 0
+      resolved.command = 0.0
     }
 
     if (msg.values !== undefined) {
@@ -392,6 +392,6 @@ class Odrive_commandResponse {
 module.exports = {
   Request: Odrive_commandRequest,
   Response: Odrive_commandResponse,
-  md5sum() { return '490a95e9f7999f7ded62b1edb2bf95f8'; },
+  md5sum() { return '58b88c37419d5be4e900c845f70ccf1e'; },
   datatype() { return 'steering/Odrive_command'; }
 };
