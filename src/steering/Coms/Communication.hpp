@@ -31,7 +31,7 @@ class roscom{
     {
         ROS_INFO("Waiting for action server to start.");
         ac.waitForServer();
-        ROS_INFO("gotem");
+        ROS_INFO("Action server connected");
     }
     steering::Odrive_command srv;
     steering::Desired_angle srv_angle;

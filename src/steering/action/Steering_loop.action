@@ -3,6 +3,7 @@ float32 new_position
 ---
 # Define the result
 bool movement_done
+float32 result_position
 ---
 # Define a feedback message
 float32 current_position

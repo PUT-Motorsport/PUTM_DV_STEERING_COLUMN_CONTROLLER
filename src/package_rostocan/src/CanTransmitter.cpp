@@ -1,4 +1,5 @@
 #include "CanTransmitter.h"
+#include "Odrive_meta.h"
 #include <iostream>
 
 using namespace std;
@@ -11,7 +12,6 @@ subscriber_WheelTemp_main{n.subscribe("transmitted/WheelTemp_main", 1, &CanTrans
 // subscriber_
 {
   Odrive_Action_Server.start();
-
 }
 
 void CanTransmitter::transmit_Apps_main(const package_rostocan::Apps_main::ConstPtr& ros_msg)
@@ -60,12 +60,24 @@ void CanTransmitter::transmit_WheelTemp_main(const package_rostocan::WheelTemp_m
 
 bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp)
 {
-  resp.Axis_Error = 1;
+  if(req.command == SET_AXIS_REQUESTED_STATE)
+  {
+    //Send frame to change Odrive state.
+  }
   return true;
 }
 void CanTransmitter::executeCB(const steering::Steering_loopGoalConstPtr &goal)
 {
-  cout << "Action started" << endl;
+  cout << "Action started " << goal->new_position << endl;
+  double current_position = 0.0;
+  while(std::abs(current_position - goal->new_position) > 0.000001)
+  {
+    current_position+=0.1;
+    feedback.current_position = current_position;
+    Odrive_Action_Server.publishFeedback(feedback);
+    cout << "current position: " << current_position << " goal: " << goal->new_position << endl;
+  }
+  cout << "movement done" << endl;
+  result.movement_done = true;
+  Odrive_Action_Server.setSucceeded(result);
 }
-
-// transmit_

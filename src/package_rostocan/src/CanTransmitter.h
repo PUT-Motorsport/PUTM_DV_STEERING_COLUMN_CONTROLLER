@@ -23,6 +23,9 @@ class CanTransmitter : public CanBase
         ros::ServiceServer ODrive_Service = n.advertiseService("Odrive_command", Odrive_Service_Callback);
         // services
         Action_Server Odrive_Action_Server;
+        steering::Steering_loopFeedback feedback;
+        steering::Steering_loopResult result;
+
         // actions
         void transmit_Apps_main(const package_rostocan::Apps_main::ConstPtr& ros_msg);
         void transmit_WheelTemp_main(const package_rostocan::WheelTemp_main::ConstPtr& ros_msg);
