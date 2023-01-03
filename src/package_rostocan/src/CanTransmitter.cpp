@@ -57,7 +57,7 @@ void CanTransmitter::transmit_WheelTemp_main(const package_rostocan::WheelTemp_m
 	write(s, &frame, sizeof(struct can_frame));
 }
 
-bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp)
+bool CanTransmitter::Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp)
 {
   if(req.command == SET_AXIS_REQUESTED_STATE)
   {

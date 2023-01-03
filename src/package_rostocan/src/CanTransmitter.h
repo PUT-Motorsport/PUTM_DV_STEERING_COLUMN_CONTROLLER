@@ -3,8 +3,6 @@
 #include <actionlib/server/simple_action_server.h>
 #include "steering/Steering_loopAction.h"
 
-bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp);
-
 typedef actionlib::SimpleActionServer<steering::Steering_loopAction>  Action_Server;
 
 class CanTransmitter : public CanBase
@@ -13,13 +11,14 @@ class CanTransmitter : public CanBase
     public:
 
         void executeCB(const steering::Steering_loopGoalConstPtr &goal);
+        bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp);
         CanTransmitter(); 
 
     private:
         ros::Subscriber subscriber_Apps_main;
         ros::Subscriber subscriber_WheelTemp_main;
         // subscribers
-        ros::ServiceServer ODrive_Service = n.advertiseService("Odrive_command", Odrive_Service_Callback);
+        ros::ServiceServer ODrive_Service = n.advertiseService("Odrive_command", &CanTransmitter::Odrive_Service_Callback ,this);
         // services
         Action_Server Odrive_Action_Server;
         steering::Steering_loopFeedback feedback;
