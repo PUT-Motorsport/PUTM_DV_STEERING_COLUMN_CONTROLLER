@@ -54,7 +54,6 @@ void CanTransmitter::transmit_WheelTemp_main(const package_rostocan::WheelTemp_m
 	auto can_data = reinterpret_cast<uint8_t*>(&can_msg);
 
   std::copy(&can_data[0], &can_data[PUTM_CAN::WHEELTEMP_MAIN_CAN_DLC], frame.data);
-
 	write(s, &frame, sizeof(struct can_frame));
 }
 
@@ -63,9 +62,12 @@ bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::O
   if(req.command == SET_AXIS_REQUESTED_STATE)
   {
     //Send frame to change Odrive state.
+    cout << "SET_AXIS_REQUESTED_STATE" << endl;
+    can_frame frame;
   }
   return true;
 }
+
 void CanTransmitter::executeCB(const steering::Steering_loopGoalConstPtr &goal)
 {
   cout << "Action started " << goal->new_position << endl;

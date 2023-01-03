@@ -13,7 +13,6 @@ class CanTransmitter : public CanBase
     public:
 
         void executeCB(const steering::Steering_loopGoalConstPtr &goal);
-
         CanTransmitter(); 
 
     private:

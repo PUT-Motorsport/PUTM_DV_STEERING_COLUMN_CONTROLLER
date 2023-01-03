@@ -1,5 +1,5 @@
 #include "Terminal.hpp"
-#include "/home/putm/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/Odrive/Odrive.hpp"
+#include "../Odrive/Odrive.hpp"
 #include "Odrive_meta.h"
 
 using namespace boost::asio;

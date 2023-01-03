@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <thread>
-#include "/home/putm/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/Coms/Terminal.hpp"
-#include "/home/putm/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/Coms/Communication.hpp"
+#include "../Coms/Terminal.hpp"
+//#include "/home/putm/PUTM_DV_STEERING_COLUMN_CONTROLLER/src/steering/Coms/Communication.hpp"
+#include "../Coms/Communication.hpp"
 #include "vector"
 
 namespace Steering_Column
