@@ -62,8 +62,12 @@ bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::O
   if(req.command == SET_AXIS_REQUESTED_STATE)
   {
     //Send frame to change Odrive state.
-    cout << "SET_AXIS_REQUESTED_STATE" << endl;
     can_frame frame;
+    frame.can_id = req.command;
+    
+    auto can_data = reinterpret_cast<uint8_t*>(&req.values);
+    std::copy(&can_data[0], &can_data[2], frame.data);
+	  write(s, &frame, sizeof(struct can_frame));
   }
   return true;
 }
