@@ -11,6 +11,24 @@ Odrive_Action_Server(CanBase::n, "Odrive_Action", boost::bind(&CanTransmitter::s
 
 bool CanTransmitter::transmit_odrive_rtr(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp)
 {
+  /* Do dokończenia jak będą headery
+  switch((int)(req.command))
+    {
+        case SET_AXIS_REQUESTED_STATE:
+            req.Axis_State = 
+            break;
+        case SET_CONTROLLER_MODE:
+            req.Control_Mode =
+            req.Input_Mode = 
+            break;
+        case SET_INPUT_POS:
+            req.Input_Position = 
+            req.Input_Velocity_FF =
+            req.Input_Torque_FF   = 
+        case SET_ABSOLUTE_POSITION:
+            req.Position = 
+    }
+    */
   if(req.command == SET_AXIS_REQUESTED_STATE)
   {
     PUTM_CAN::WheelTemp_main can_msg;
@@ -20,7 +38,7 @@ bool CanTransmitter::transmit_odrive_rtr(steering::Odrive_command::Request &req,
     frame.can_id  = (uint16_t)10U|CAN_RTR_FLAG;
 	  frame.can_dlc = (uint16_t)0U;
 
-    can_msg.wheelTemp[0] = (uint8_t)req.values[0];
+    //can_msg.wheelTemp[0] = (uint8_t)req.values[0];
 
 	  auto can_data = reinterpret_cast<uint8_t*>(&can_msg);
 

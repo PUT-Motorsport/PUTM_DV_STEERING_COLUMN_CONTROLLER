@@ -1,8 +1,40 @@
 (cl:in-package steering-srv)
 (cl:export '(COMMAND-VAL
           COMMAND
-          VALUES-VAL
-          VALUES
+          AXIS_STATE-VAL
+          AXIS_STATE
+          CONTROL_MODE-VAL
+          CONTROL_MODE
+          INPUT_MODE-VAL
+          INPUT_MODE
+          INPUT_POSITION-VAL
+          INPUT_POSITION
+          INPUT_VELOCITY_FF-VAL
+          INPUT_VELOCITY_FF
+          INPUT_TORQUE_FF-VAL
+          INPUT_TORQUE_FF
+          INPUT_TORQUE-VAL
+          INPUT_TORQUE
+          VELOCITY_LIMIT-VAL
+          VELOCITY_LIMIT
+          CURRENT_LIMIT-VAL
+          CURRENT_LIMIT
+          TRAJ_VELOCITY_LIMIT-VAL
+          TRAJ_VELOCITY_LIMIT
+          TRAJ_ACCEL_LIMIT-VAL
+          TRAJ_ACCEL_LIMIT
+          TRAJ_DECEL_LIMIT-VAL
+          TRAJ_DECEL_LIMIT
+          TRAJ_INERTIA-VAL
+          TRAJ_INERTIA
+          POSITION-VAL
+          POSITION
+          POS_GAIN-VAL
+          POS_GAIN
+          VEL_GAIN-VAL
+          VEL_GAIN
+          VEL_INTEGRATOR_GAIN-VAL
+          VEL_INTEGRATOR_GAIN
           AXIS_ERROR-VAL
           AXIS_ERROR
           AXIS_STATE-VAL

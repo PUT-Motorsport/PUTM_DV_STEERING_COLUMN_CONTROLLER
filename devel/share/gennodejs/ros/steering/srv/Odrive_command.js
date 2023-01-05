@@ -22,7 +22,23 @@ class Odrive_commandRequest {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.command = null;
-      this.values = null;
+      this.Axis_State = null;
+      this.Control_Mode = null;
+      this.Input_Mode = null;
+      this.Input_Position = null;
+      this.Input_Velocity_FF = null;
+      this.Input_Torque_FF = null;
+      this.Input_Torque = null;
+      this.Velocity_Limit = null;
+      this.Current_Limit = null;
+      this.Traj_Velocity_Limit = null;
+      this.Traj_Accel_Limit = null;
+      this.Traj_Decel_Limit = null;
+      this.Traj_Inertia = null;
+      this.Position = null;
+      this.Pos_Gain = null;
+      this.Vel_Gain = null;
+      this.Vel_Integrator_Gain = null;
     }
     else {
       if (initObj.hasOwnProperty('command')) {
@@ -31,11 +47,107 @@ class Odrive_commandRequest {
       else {
         this.command = 0.0;
       }
-      if (initObj.hasOwnProperty('values')) {
-        this.values = initObj.values
+      if (initObj.hasOwnProperty('Axis_State')) {
+        this.Axis_State = initObj.Axis_State
       }
       else {
-        this.values = [];
+        this.Axis_State = 0;
+      }
+      if (initObj.hasOwnProperty('Control_Mode')) {
+        this.Control_Mode = initObj.Control_Mode
+      }
+      else {
+        this.Control_Mode = 0;
+      }
+      if (initObj.hasOwnProperty('Input_Mode')) {
+        this.Input_Mode = initObj.Input_Mode
+      }
+      else {
+        this.Input_Mode = 0;
+      }
+      if (initObj.hasOwnProperty('Input_Position')) {
+        this.Input_Position = initObj.Input_Position
+      }
+      else {
+        this.Input_Position = 0.0;
+      }
+      if (initObj.hasOwnProperty('Input_Velocity_FF')) {
+        this.Input_Velocity_FF = initObj.Input_Velocity_FF
+      }
+      else {
+        this.Input_Velocity_FF = 0;
+      }
+      if (initObj.hasOwnProperty('Input_Torque_FF')) {
+        this.Input_Torque_FF = initObj.Input_Torque_FF
+      }
+      else {
+        this.Input_Torque_FF = 0;
+      }
+      if (initObj.hasOwnProperty('Input_Torque')) {
+        this.Input_Torque = initObj.Input_Torque
+      }
+      else {
+        this.Input_Torque = 0.0;
+      }
+      if (initObj.hasOwnProperty('Velocity_Limit')) {
+        this.Velocity_Limit = initObj.Velocity_Limit
+      }
+      else {
+        this.Velocity_Limit = 0.0;
+      }
+      if (initObj.hasOwnProperty('Current_Limit')) {
+        this.Current_Limit = initObj.Current_Limit
+      }
+      else {
+        this.Current_Limit = 0.0;
+      }
+      if (initObj.hasOwnProperty('Traj_Velocity_Limit')) {
+        this.Traj_Velocity_Limit = initObj.Traj_Velocity_Limit
+      }
+      else {
+        this.Traj_Velocity_Limit = 0.0;
+      }
+      if (initObj.hasOwnProperty('Traj_Accel_Limit')) {
+        this.Traj_Accel_Limit = initObj.Traj_Accel_Limit
+      }
+      else {
+        this.Traj_Accel_Limit = 0.0;
+      }
+      if (initObj.hasOwnProperty('Traj_Decel_Limit')) {
+        this.Traj_Decel_Limit = initObj.Traj_Decel_Limit
+      }
+      else {
+        this.Traj_Decel_Limit = 0.0;
+      }
+      if (initObj.hasOwnProperty('Traj_Inertia')) {
+        this.Traj_Inertia = initObj.Traj_Inertia
+      }
+      else {
+        this.Traj_Inertia = 0.0;
+      }
+      if (initObj.hasOwnProperty('Position')) {
+        this.Position = initObj.Position
+      }
+      else {
+        this.Position = 0.0;
+      }
+      if (initObj.hasOwnProperty('Pos_Gain')) {
+        this.Pos_Gain = initObj.Pos_Gain
+      }
+      else {
+        this.Pos_Gain = 0.0;
+      }
+      if (initObj.hasOwnProperty('Vel_Gain')) {
+        this.Vel_Gain = initObj.Vel_Gain
+      }
+      else {
+        this.Vel_Gain = 0.0;
+      }
+      if (initObj.hasOwnProperty('Vel_Integrator_Gain')) {
+        this.Vel_Integrator_Gain = initObj.Vel_Integrator_Gain
+      }
+      else {
+        this.Vel_Integrator_Gain = 0.0;
       }
     }
   }
@@ -44,8 +156,40 @@ class Odrive_commandRequest {
     // Serializes a message object of type Odrive_commandRequest
     // Serialize message field [command]
     bufferOffset = _serializer.float64(obj.command, buffer, bufferOffset);
-    // Serialize message field [values]
-    bufferOffset = _arraySerializer.float64(obj.values, buffer, bufferOffset, null);
+    // Serialize message field [Axis_State]
+    bufferOffset = _serializer.int8(obj.Axis_State, buffer, bufferOffset);
+    // Serialize message field [Control_Mode]
+    bufferOffset = _serializer.int32(obj.Control_Mode, buffer, bufferOffset);
+    // Serialize message field [Input_Mode]
+    bufferOffset = _serializer.int32(obj.Input_Mode, buffer, bufferOffset);
+    // Serialize message field [Input_Position]
+    bufferOffset = _serializer.float32(obj.Input_Position, buffer, bufferOffset);
+    // Serialize message field [Input_Velocity_FF]
+    bufferOffset = _serializer.uint16(obj.Input_Velocity_FF, buffer, bufferOffset);
+    // Serialize message field [Input_Torque_FF]
+    bufferOffset = _serializer.uint16(obj.Input_Torque_FF, buffer, bufferOffset);
+    // Serialize message field [Input_Torque]
+    bufferOffset = _serializer.float32(obj.Input_Torque, buffer, bufferOffset);
+    // Serialize message field [Velocity_Limit]
+    bufferOffset = _serializer.float32(obj.Velocity_Limit, buffer, bufferOffset);
+    // Serialize message field [Current_Limit]
+    bufferOffset = _serializer.float32(obj.Current_Limit, buffer, bufferOffset);
+    // Serialize message field [Traj_Velocity_Limit]
+    bufferOffset = _serializer.float32(obj.Traj_Velocity_Limit, buffer, bufferOffset);
+    // Serialize message field [Traj_Accel_Limit]
+    bufferOffset = _serializer.float32(obj.Traj_Accel_Limit, buffer, bufferOffset);
+    // Serialize message field [Traj_Decel_Limit]
+    bufferOffset = _serializer.float32(obj.Traj_Decel_Limit, buffer, bufferOffset);
+    // Serialize message field [Traj_Inertia]
+    bufferOffset = _serializer.float32(obj.Traj_Inertia, buffer, bufferOffset);
+    // Serialize message field [Position]
+    bufferOffset = _serializer.float32(obj.Position, buffer, bufferOffset);
+    // Serialize message field [Pos_Gain]
+    bufferOffset = _serializer.float32(obj.Pos_Gain, buffer, bufferOffset);
+    // Serialize message field [Vel_Gain]
+    bufferOffset = _serializer.float32(obj.Vel_Gain, buffer, bufferOffset);
+    // Serialize message field [Vel_Integrator_Gain]
+    bufferOffset = _serializer.float32(obj.Vel_Integrator_Gain, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -55,15 +199,45 @@ class Odrive_commandRequest {
     let data = new Odrive_commandRequest(null);
     // Deserialize message field [command]
     data.command = _deserializer.float64(buffer, bufferOffset);
-    // Deserialize message field [values]
-    data.values = _arrayDeserializer.float64(buffer, bufferOffset, null)
+    // Deserialize message field [Axis_State]
+    data.Axis_State = _deserializer.int8(buffer, bufferOffset);
+    // Deserialize message field [Control_Mode]
+    data.Control_Mode = _deserializer.int32(buffer, bufferOffset);
+    // Deserialize message field [Input_Mode]
+    data.Input_Mode = _deserializer.int32(buffer, bufferOffset);
+    // Deserialize message field [Input_Position]
+    data.Input_Position = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Input_Velocity_FF]
+    data.Input_Velocity_FF = _deserializer.uint16(buffer, bufferOffset);
+    // Deserialize message field [Input_Torque_FF]
+    data.Input_Torque_FF = _deserializer.uint16(buffer, bufferOffset);
+    // Deserialize message field [Input_Torque]
+    data.Input_Torque = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Velocity_Limit]
+    data.Velocity_Limit = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Current_Limit]
+    data.Current_Limit = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Traj_Velocity_Limit]
+    data.Traj_Velocity_Limit = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Traj_Accel_Limit]
+    data.Traj_Accel_Limit = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Traj_Decel_Limit]
+    data.Traj_Decel_Limit = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Traj_Inertia]
+    data.Traj_Inertia = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Position]
+    data.Position = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Pos_Gain]
+    data.Pos_Gain = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Vel_Gain]
+    data.Vel_Gain = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [Vel_Integrator_Gain]
+    data.Vel_Integrator_Gain = _deserializer.float32(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    let length = 0;
-    length += 8 * object.values.length;
-    return length + 12;
+    return 69;
   }
 
   static datatype() {
@@ -73,14 +247,30 @@ class Odrive_commandRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '5790ab1847ff74173b054431da19345c';
+    return 'b8fe282d5250df9b15d2d8e86d273add';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     float64 command
-    float64[] values
+    int8 Axis_State
+    int32 Control_Mode
+    int32 Input_Mode
+    float32 Input_Position
+    uint16 Input_Velocity_FF
+    uint16 Input_Torque_FF
+    float32 Input_Torque
+    float32 Velocity_Limit
+    float32 Current_Limit
+    float32 Traj_Velocity_Limit
+    float32 Traj_Accel_Limit
+    float32 Traj_Decel_Limit
+    float32 Traj_Inertia
+    float32 Position
+    float32 Pos_Gain
+    float32 Vel_Gain
+    float32 Vel_Integrator_Gain
     
     `;
   }
@@ -98,11 +288,123 @@ class Odrive_commandRequest {
       resolved.command = 0.0
     }
 
-    if (msg.values !== undefined) {
-      resolved.values = msg.values;
+    if (msg.Axis_State !== undefined) {
+      resolved.Axis_State = msg.Axis_State;
     }
     else {
-      resolved.values = []
+      resolved.Axis_State = 0
+    }
+
+    if (msg.Control_Mode !== undefined) {
+      resolved.Control_Mode = msg.Control_Mode;
+    }
+    else {
+      resolved.Control_Mode = 0
+    }
+
+    if (msg.Input_Mode !== undefined) {
+      resolved.Input_Mode = msg.Input_Mode;
+    }
+    else {
+      resolved.Input_Mode = 0
+    }
+
+    if (msg.Input_Position !== undefined) {
+      resolved.Input_Position = msg.Input_Position;
+    }
+    else {
+      resolved.Input_Position = 0.0
+    }
+
+    if (msg.Input_Velocity_FF !== undefined) {
+      resolved.Input_Velocity_FF = msg.Input_Velocity_FF;
+    }
+    else {
+      resolved.Input_Velocity_FF = 0
+    }
+
+    if (msg.Input_Torque_FF !== undefined) {
+      resolved.Input_Torque_FF = msg.Input_Torque_FF;
+    }
+    else {
+      resolved.Input_Torque_FF = 0
+    }
+
+    if (msg.Input_Torque !== undefined) {
+      resolved.Input_Torque = msg.Input_Torque;
+    }
+    else {
+      resolved.Input_Torque = 0.0
+    }
+
+    if (msg.Velocity_Limit !== undefined) {
+      resolved.Velocity_Limit = msg.Velocity_Limit;
+    }
+    else {
+      resolved.Velocity_Limit = 0.0
+    }
+
+    if (msg.Current_Limit !== undefined) {
+      resolved.Current_Limit = msg.Current_Limit;
+    }
+    else {
+      resolved.Current_Limit = 0.0
+    }
+
+    if (msg.Traj_Velocity_Limit !== undefined) {
+      resolved.Traj_Velocity_Limit = msg.Traj_Velocity_Limit;
+    }
+    else {
+      resolved.Traj_Velocity_Limit = 0.0
+    }
+
+    if (msg.Traj_Accel_Limit !== undefined) {
+      resolved.Traj_Accel_Limit = msg.Traj_Accel_Limit;
+    }
+    else {
+      resolved.Traj_Accel_Limit = 0.0
+    }
+
+    if (msg.Traj_Decel_Limit !== undefined) {
+      resolved.Traj_Decel_Limit = msg.Traj_Decel_Limit;
+    }
+    else {
+      resolved.Traj_Decel_Limit = 0.0
+    }
+
+    if (msg.Traj_Inertia !== undefined) {
+      resolved.Traj_Inertia = msg.Traj_Inertia;
+    }
+    else {
+      resolved.Traj_Inertia = 0.0
+    }
+
+    if (msg.Position !== undefined) {
+      resolved.Position = msg.Position;
+    }
+    else {
+      resolved.Position = 0.0
+    }
+
+    if (msg.Pos_Gain !== undefined) {
+      resolved.Pos_Gain = msg.Pos_Gain;
+    }
+    else {
+      resolved.Pos_Gain = 0.0
+    }
+
+    if (msg.Vel_Gain !== undefined) {
+      resolved.Vel_Gain = msg.Vel_Gain;
+    }
+    else {
+      resolved.Vel_Gain = 0.0
+    }
+
+    if (msg.Vel_Integrator_Gain !== undefined) {
+      resolved.Vel_Integrator_Gain = msg.Vel_Integrator_Gain;
+    }
+    else {
+      resolved.Vel_Integrator_Gain = 0.0
     }
 
     return resolved;
@@ -392,6 +694,6 @@ class Odrive_commandResponse {
 module.exports = {
   Request: Odrive_commandRequest,
   Response: Odrive_commandResponse,
-  md5sum() { return '58b88c37419d5be4e900c845f70ccf1e'; },
+  md5sum() { return '82e9f30ff634c6c0e7b35b96a15643a9'; },
   datatype() { return 'steering/Odrive_command'; }
 };

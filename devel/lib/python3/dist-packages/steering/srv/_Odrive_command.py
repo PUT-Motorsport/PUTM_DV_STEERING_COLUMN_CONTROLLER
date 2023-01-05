@@ -8,14 +8,30 @@ import struct
 
 
 class Odrive_commandRequest(genpy.Message):
-  _md5sum = "5790ab1847ff74173b054431da19345c"
+  _md5sum = "b8fe282d5250df9b15d2d8e86d273add"
   _type = "steering/Odrive_commandRequest"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """float64 command
-float64[] values
+int8 Axis_State
+int32 Control_Mode
+int32 Input_Mode
+float32 Input_Position
+uint16 Input_Velocity_FF
+uint16 Input_Torque_FF
+float32 Input_Torque
+float32 Velocity_Limit
+float32 Current_Limit
+float32 Traj_Velocity_Limit
+float32 Traj_Accel_Limit
+float32 Traj_Decel_Limit
+float32 Traj_Inertia
+float32 Position
+float32 Pos_Gain
+float32 Vel_Gain
+float32 Vel_Integrator_Gain
 """
-  __slots__ = ['command','values']
-  _slot_types = ['float64','float64[]']
+  __slots__ = ['command','Axis_State','Control_Mode','Input_Mode','Input_Position','Input_Velocity_FF','Input_Torque_FF','Input_Torque','Velocity_Limit','Current_Limit','Traj_Velocity_Limit','Traj_Accel_Limit','Traj_Decel_Limit','Traj_Inertia','Position','Pos_Gain','Vel_Gain','Vel_Integrator_Gain']
+  _slot_types = ['float64','int8','int32','int32','float32','uint16','uint16','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -25,7 +41,7 @@ float64[] values
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       command,values
+       command,Axis_State,Control_Mode,Input_Mode,Input_Position,Input_Velocity_FF,Input_Torque_FF,Input_Torque,Velocity_Limit,Current_Limit,Traj_Velocity_Limit,Traj_Accel_Limit,Traj_Decel_Limit,Traj_Inertia,Position,Pos_Gain,Vel_Gain,Vel_Integrator_Gain
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -36,11 +52,59 @@ float64[] values
       # message fields cannot be None, assign default values for those that are
       if self.command is None:
         self.command = 0.
-      if self.values is None:
-        self.values = []
+      if self.Axis_State is None:
+        self.Axis_State = 0
+      if self.Control_Mode is None:
+        self.Control_Mode = 0
+      if self.Input_Mode is None:
+        self.Input_Mode = 0
+      if self.Input_Position is None:
+        self.Input_Position = 0.
+      if self.Input_Velocity_FF is None:
+        self.Input_Velocity_FF = 0
+      if self.Input_Torque_FF is None:
+        self.Input_Torque_FF = 0
+      if self.Input_Torque is None:
+        self.Input_Torque = 0.
+      if self.Velocity_Limit is None:
+        self.Velocity_Limit = 0.
+      if self.Current_Limit is None:
+        self.Current_Limit = 0.
+      if self.Traj_Velocity_Limit is None:
+        self.Traj_Velocity_Limit = 0.
+      if self.Traj_Accel_Limit is None:
+        self.Traj_Accel_Limit = 0.
+      if self.Traj_Decel_Limit is None:
+        self.Traj_Decel_Limit = 0.
+      if self.Traj_Inertia is None:
+        self.Traj_Inertia = 0.
+      if self.Position is None:
+        self.Position = 0.
+      if self.Pos_Gain is None:
+        self.Pos_Gain = 0.
+      if self.Vel_Gain is None:
+        self.Vel_Gain = 0.
+      if self.Vel_Integrator_Gain is None:
+        self.Vel_Integrator_Gain = 0.
     else:
       self.command = 0.
-      self.values = []
+      self.Axis_State = 0
+      self.Control_Mode = 0
+      self.Input_Mode = 0
+      self.Input_Position = 0.
+      self.Input_Velocity_FF = 0
+      self.Input_Torque_FF = 0
+      self.Input_Torque = 0.
+      self.Velocity_Limit = 0.
+      self.Current_Limit = 0.
+      self.Traj_Velocity_Limit = 0.
+      self.Traj_Accel_Limit = 0.
+      self.Traj_Decel_Limit = 0.
+      self.Traj_Inertia = 0.
+      self.Position = 0.
+      self.Pos_Gain = 0.
+      self.Vel_Gain = 0.
+      self.Vel_Integrator_Gain = 0.
 
   def _get_types(self):
     """
@@ -54,12 +118,8 @@ float64[] values
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.command
-      buff.write(_get_struct_d().pack(_x))
-      length = len(self.values)
-      buff.write(_struct_I.pack(length))
-      pattern = '<%sd'%length
-      buff.write(struct.Struct(pattern).pack(*self.values))
+      _x = self
+      buff.write(_get_struct_db2if2H11f().pack(_x.command, _x.Axis_State, _x.Control_Mode, _x.Input_Mode, _x.Input_Position, _x.Input_Velocity_FF, _x.Input_Torque_FF, _x.Input_Torque, _x.Velocity_Limit, _x.Current_Limit, _x.Traj_Velocity_Limit, _x.Traj_Accel_Limit, _x.Traj_Decel_Limit, _x.Traj_Inertia, _x.Position, _x.Pos_Gain, _x.Vel_Gain, _x.Vel_Integrator_Gain))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -72,17 +132,10 @@ float64[] values
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       end = 0
+      _x = self
       start = end
-      end += 8
-      (self.command,) = _get_struct_d().unpack(str[start:end])
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      pattern = '<%sd'%length
-      start = end
-      s = struct.Struct(pattern)
-      end += s.size
-      self.values = s.unpack(str[start:end])
+      end += 69
+      (_x.command, _x.Axis_State, _x.Control_Mode, _x.Input_Mode, _x.Input_Position, _x.Input_Velocity_FF, _x.Input_Torque_FF, _x.Input_Torque, _x.Velocity_Limit, _x.Current_Limit, _x.Traj_Velocity_Limit, _x.Traj_Accel_Limit, _x.Traj_Decel_Limit, _x.Traj_Inertia, _x.Position, _x.Pos_Gain, _x.Vel_Gain, _x.Vel_Integrator_Gain,) = _get_struct_db2if2H11f().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -95,12 +148,8 @@ float64[] values
     :param numpy: numpy python module
     """
     try:
-      _x = self.command
-      buff.write(_get_struct_d().pack(_x))
-      length = len(self.values)
-      buff.write(_struct_I.pack(length))
-      pattern = '<%sd'%length
-      buff.write(self.values.tostring())
+      _x = self
+      buff.write(_get_struct_db2if2H11f().pack(_x.command, _x.Axis_State, _x.Control_Mode, _x.Input_Mode, _x.Input_Position, _x.Input_Velocity_FF, _x.Input_Torque_FF, _x.Input_Torque, _x.Velocity_Limit, _x.Current_Limit, _x.Traj_Velocity_Limit, _x.Traj_Accel_Limit, _x.Traj_Decel_Limit, _x.Traj_Inertia, _x.Position, _x.Pos_Gain, _x.Vel_Gain, _x.Vel_Integrator_Gain))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -114,17 +163,10 @@ float64[] values
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       end = 0
+      _x = self
       start = end
-      end += 8
-      (self.command,) = _get_struct_d().unpack(str[start:end])
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      pattern = '<%sd'%length
-      start = end
-      s = struct.Struct(pattern)
-      end += s.size
-      self.values = numpy.frombuffer(str[start:end], dtype=numpy.float64, count=length)
+      end += 69
+      (_x.command, _x.Axis_State, _x.Control_Mode, _x.Input_Mode, _x.Input_Position, _x.Input_Velocity_FF, _x.Input_Torque_FF, _x.Input_Torque, _x.Velocity_Limit, _x.Current_Limit, _x.Traj_Velocity_Limit, _x.Traj_Accel_Limit, _x.Traj_Decel_Limit, _x.Traj_Inertia, _x.Position, _x.Pos_Gain, _x.Vel_Gain, _x.Vel_Integrator_Gain,) = _get_struct_db2if2H11f().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -133,12 +175,12 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_d = None
-def _get_struct_d():
-    global _struct_d
-    if _struct_d is None:
-        _struct_d = struct.Struct("<d")
-    return _struct_d
+_struct_db2if2H11f = None
+def _get_struct_db2if2H11f():
+    global _struct_db2if2H11f
+    if _struct_db2if2H11f is None:
+        _struct_db2if2H11f = struct.Struct("<db2if2H11f")
+    return _struct_db2if2H11f
 # This Python file uses the following encoding: utf-8
 """autogenerated by genpy from steering/Odrive_commandResponse.msg. Do not edit."""
 import codecs
@@ -300,6 +342,6 @@ def _get_struct_ib10i():
     return _struct_ib10i
 class Odrive_command(object):
   _type          = 'steering/Odrive_command'
-  _md5sum = '58b88c37419d5be4e900c845f70ccf1e'
+  _md5sum = '82e9f30ff634c6c0e7b35b96a15643a9'
   _request_class  = Odrive_commandRequest
   _response_class = Odrive_commandResponse

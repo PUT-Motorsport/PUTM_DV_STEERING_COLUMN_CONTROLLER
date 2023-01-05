@@ -1,8 +1,8 @@
-prefix=/home/mateusz/odrive_workspace/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel
+prefix=/home/putm/devel
 
 Name: package_rostocan
 Description: Description of package_rostocan
 Version: 0.0.0
-Cflags: -I/home/mateusz/odrive_workspace/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel/include
+Cflags: -I/home/putm/devel/include
 Libs: -L${prefix}/lib 
 Requires: message_runtime

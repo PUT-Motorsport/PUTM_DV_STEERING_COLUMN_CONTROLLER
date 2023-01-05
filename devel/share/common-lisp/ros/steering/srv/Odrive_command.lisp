@@ -12,11 +12,91 @@
     :initarg :command
     :type cl:float
     :initform 0.0)
-   (values
-    :reader values
-    :initarg :values
-    :type (cl:vector cl:float)
-   :initform (cl:make-array 0 :element-type 'cl:float :initial-element 0.0)))
+   (Axis_State
+    :reader Axis_State
+    :initarg :Axis_State
+    :type cl:fixnum
+    :initform 0)
+   (Control_Mode
+    :reader Control_Mode
+    :initarg :Control_Mode
+    :type cl:integer
+    :initform 0)
+   (Input_Mode
+    :reader Input_Mode
+    :initarg :Input_Mode
+    :type cl:integer
+    :initform 0)
+   (Input_Position
+    :reader Input_Position
+    :initarg :Input_Position
+    :type cl:float
+    :initform 0.0)
+   (Input_Velocity_FF
+    :reader Input_Velocity_FF
+    :initarg :Input_Velocity_FF
+    :type cl:fixnum
+    :initform 0)
+   (Input_Torque_FF
+    :reader Input_Torque_FF
+    :initarg :Input_Torque_FF
+    :type cl:fixnum
+    :initform 0)
+   (Input_Torque
+    :reader Input_Torque
+    :initarg :Input_Torque
+    :type cl:float
+    :initform 0.0)
+   (Velocity_Limit
+    :reader Velocity_Limit
+    :initarg :Velocity_Limit
+    :type cl:float
+    :initform 0.0)
+   (Current_Limit
+    :reader Current_Limit
+    :initarg :Current_Limit
+    :type cl:float
+    :initform 0.0)
+   (Traj_Velocity_Limit
+    :reader Traj_Velocity_Limit
+    :initarg :Traj_Velocity_Limit
+    :type cl:float
+    :initform 0.0)
+   (Traj_Accel_Limit
+    :reader Traj_Accel_Limit
+    :initarg :Traj_Accel_Limit
+    :type cl:float
+    :initform 0.0)
+   (Traj_Decel_Limit
+    :reader Traj_Decel_Limit
+    :initarg :Traj_Decel_Limit
+    :type cl:float
+    :initform 0.0)
+   (Traj_Inertia
+    :reader Traj_Inertia
+    :initarg :Traj_Inertia
+    :type cl:float
+    :initform 0.0)
+   (Position
+    :reader Position
+    :initarg :Position
+    :type cl:float
+    :initform 0.0)
+   (Pos_Gain
+    :reader Pos_Gain
+    :initarg :Pos_Gain
+    :type cl:float
+    :initform 0.0)
+   (Vel_Gain
+    :reader Vel_Gain
+    :initarg :Vel_Gain
+    :type cl:float
+    :initform 0.0)
+   (Vel_Integrator_Gain
+    :reader Vel_Integrator_Gain
+    :initarg :Vel_Integrator_Gain
+    :type cl:float
+    :initform 0.0))
 )
 
 (cl:defclass Odrive_command-request (<Odrive_command-request>)
@@ -32,10 +112,90 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:command-val is deprecated.  Use steering-srv:command instead.")
   (command m))
 
-(cl:ensure-generic-function 'values-val :lambda-list '(m))
-(cl:defmethod values-val ((m <Odrive_command-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:values-val is deprecated.  Use steering-srv:values instead.")
-  (values m))
+(cl:ensure-generic-function 'Axis_State-val :lambda-list '(m))
+(cl:defmethod Axis_State-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Axis_State-val is deprecated.  Use steering-srv:Axis_State instead.")
+  (Axis_State m))
+
+(cl:ensure-generic-function 'Control_Mode-val :lambda-list '(m))
+(cl:defmethod Control_Mode-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Control_Mode-val is deprecated.  Use steering-srv:Control_Mode instead.")
+  (Control_Mode m))
+
+(cl:ensure-generic-function 'Input_Mode-val :lambda-list '(m))
+(cl:defmethod Input_Mode-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Input_Mode-val is deprecated.  Use steering-srv:Input_Mode instead.")
+  (Input_Mode m))
+
+(cl:ensure-generic-function 'Input_Position-val :lambda-list '(m))
+(cl:defmethod Input_Position-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Input_Position-val is deprecated.  Use steering-srv:Input_Position instead.")
+  (Input_Position m))
+
+(cl:ensure-generic-function 'Input_Velocity_FF-val :lambda-list '(m))
+(cl:defmethod Input_Velocity_FF-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Input_Velocity_FF-val is deprecated.  Use steering-srv:Input_Velocity_FF instead.")
+  (Input_Velocity_FF m))
+
+(cl:ensure-generic-function 'Input_Torque_FF-val :lambda-list '(m))
+(cl:defmethod Input_Torque_FF-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Input_Torque_FF-val is deprecated.  Use steering-srv:Input_Torque_FF instead.")
+  (Input_Torque_FF m))
+
+(cl:ensure-generic-function 'Input_Torque-val :lambda-list '(m))
+(cl:defmethod Input_Torque-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Input_Torque-val is deprecated.  Use steering-srv:Input_Torque instead.")
+  (Input_Torque m))
+
+(cl:ensure-generic-function 'Velocity_Limit-val :lambda-list '(m))
+(cl:defmethod Velocity_Limit-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Velocity_Limit-val is deprecated.  Use steering-srv:Velocity_Limit instead.")
+  (Velocity_Limit m))
+
+(cl:ensure-generic-function 'Current_Limit-val :lambda-list '(m))
+(cl:defmethod Current_Limit-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Current_Limit-val is deprecated.  Use steering-srv:Current_Limit instead.")
+  (Current_Limit m))
+
+(cl:ensure-generic-function 'Traj_Velocity_Limit-val :lambda-list '(m))
+(cl:defmethod Traj_Velocity_Limit-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Traj_Velocity_Limit-val is deprecated.  Use steering-srv:Traj_Velocity_Limit instead.")
+  (Traj_Velocity_Limit m))
+
+(cl:ensure-generic-function 'Traj_Accel_Limit-val :lambda-list '(m))
+(cl:defmethod Traj_Accel_Limit-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Traj_Accel_Limit-val is deprecated.  Use steering-srv:Traj_Accel_Limit instead.")
+  (Traj_Accel_Limit m))
+
+(cl:ensure-generic-function 'Traj_Decel_Limit-val :lambda-list '(m))
+(cl:defmethod Traj_Decel_Limit-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Traj_Decel_Limit-val is deprecated.  Use steering-srv:Traj_Decel_Limit instead.")
+  (Traj_Decel_Limit m))
+
+(cl:ensure-generic-function 'Traj_Inertia-val :lambda-list '(m))
+(cl:defmethod Traj_Inertia-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Traj_Inertia-val is deprecated.  Use steering-srv:Traj_Inertia instead.")
+  (Traj_Inertia m))
+
+(cl:ensure-generic-function 'Position-val :lambda-list '(m))
+(cl:defmethod Position-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Position-val is deprecated.  Use steering-srv:Position instead.")
+  (Position m))
+
+(cl:ensure-generic-function 'Pos_Gain-val :lambda-list '(m))
+(cl:defmethod Pos_Gain-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Pos_Gain-val is deprecated.  Use steering-srv:Pos_Gain instead.")
+  (Pos_Gain m))
+
+(cl:ensure-generic-function 'Vel_Gain-val :lambda-list '(m))
+(cl:defmethod Vel_Gain-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Vel_Gain-val is deprecated.  Use steering-srv:Vel_Gain instead.")
+  (Vel_Gain m))
+
+(cl:ensure-generic-function 'Vel_Integrator_Gain-val :lambda-list '(m))
+(cl:defmethod Vel_Integrator_Gain-val ((m <Odrive_command-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader steering-srv:Vel_Integrator_Gain-val is deprecated.  Use steering-srv:Vel_Integrator_Gain instead.")
+  (Vel_Integrator_Gain m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <Odrive_command-request>) ostream)
   "Serializes a message object of type '<Odrive_command-request>"
   (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'command))))
@@ -47,21 +207,85 @@
     (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
-  (cl:let ((__ros_arr_len (cl:length (cl:slot-value msg 'values))))
-    (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_arr_len) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_arr_len) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_arr_len) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_arr_len) ostream))
-  (cl:map cl:nil #'(cl:lambda (ele) (cl:let ((bits (roslisp-utils:encode-double-float-bits ele)))
+  (cl:let* ((signed (cl:slot-value msg 'Axis_State)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 256) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    )
+  (cl:let* ((signed (cl:slot-value msg 'Control_Mode)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 4294967296) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) unsigned) ostream)
+    )
+  (cl:let* ((signed (cl:slot-value msg 'Input_Mode)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 4294967296) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) unsigned) ostream)
+    )
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Input_Position))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 32) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream)))
-   (cl:slot-value msg 'values))
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'Input_Velocity_FF)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'Input_Velocity_FF)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'Input_Torque_FF)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'Input_Torque_FF)) ostream)
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Input_Torque))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Velocity_Limit))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Current_Limit))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Traj_Velocity_Limit))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Traj_Accel_Limit))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Traj_Decel_Limit))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Traj_Inertia))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Position))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Pos_Gain))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Vel_Gain))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'Vel_Integrator_Gain))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <Odrive_command-request>) istream)
   "Deserializes a message object of type '<Odrive_command-request>"
@@ -75,24 +299,97 @@
       (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
     (cl:setf (cl:slot-value msg 'command) (roslisp-utils:decode-double-float-bits bits)))
-  (cl:let ((__ros_arr_len 0))
-    (cl:setf (cl:ldb (cl:byte 8 0) __ros_arr_len) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 8) __ros_arr_len) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 16) __ros_arr_len) (cl:read-byte istream))
-    (cl:setf (cl:ldb (cl:byte 8 24) __ros_arr_len) (cl:read-byte istream))
-  (cl:setf (cl:slot-value msg 'values) (cl:make-array __ros_arr_len))
-  (cl:let ((vals (cl:slot-value msg 'values)))
-    (cl:dotimes (i __ros_arr_len)
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'Axis_State) (cl:if (cl:< unsigned 128) unsigned (cl:- unsigned 256))))
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'Control_Mode) (cl:if (cl:< unsigned 2147483648) unsigned (cl:- unsigned 4294967296))))
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'Input_Mode) (cl:if (cl:< unsigned 2147483648) unsigned (cl:- unsigned 4294967296))))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 32) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
-    (cl:setf (cl:aref vals i) (roslisp-utils:decode-double-float-bits bits))))))
+    (cl:setf (cl:slot-value msg 'Input_Position) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'Input_Velocity_FF)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'Input_Velocity_FF)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'Input_Torque_FF)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'Input_Torque_FF)) (cl:read-byte istream))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Input_Torque) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Velocity_Limit) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Current_Limit) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Traj_Velocity_Limit) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Traj_Accel_Limit) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Traj_Decel_Limit) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Traj_Inertia) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Position) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Pos_Gain) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Vel_Gain) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'Vel_Integrator_Gain) (roslisp-utils:decode-single-float-bits bits)))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<Odrive_command-request>)))
@@ -103,26 +400,58 @@
   "steering/Odrive_commandRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<Odrive_command-request>)))
   "Returns md5sum for a message object of type '<Odrive_command-request>"
-  "58b88c37419d5be4e900c845f70ccf1e")
+  "82e9f30ff634c6c0e7b35b96a15643a9")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'Odrive_command-request)))
   "Returns md5sum for a message object of type 'Odrive_command-request"
-  "58b88c37419d5be4e900c845f70ccf1e")
+  "82e9f30ff634c6c0e7b35b96a15643a9")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Odrive_command-request>)))
   "Returns full string definition for message of type '<Odrive_command-request>"
-  (cl:format cl:nil "float64 command~%float64[] values~%~%~%"))
+  (cl:format cl:nil "float64 command~%int8 Axis_State~%int32 Control_Mode~%int32 Input_Mode~%float32 Input_Position~%uint16 Input_Velocity_FF~%uint16 Input_Torque_FF~%float32 Input_Torque~%float32 Velocity_Limit~%float32 Current_Limit~%float32 Traj_Velocity_Limit~%float32 Traj_Accel_Limit~%float32 Traj_Decel_Limit~%float32 Traj_Inertia~%float32 Position~%float32 Pos_Gain~%float32 Vel_Gain~%float32 Vel_Integrator_Gain~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Odrive_command-request)))
   "Returns full string definition for message of type 'Odrive_command-request"
-  (cl:format cl:nil "float64 command~%float64[] values~%~%~%"))
+  (cl:format cl:nil "float64 command~%int8 Axis_State~%int32 Control_Mode~%int32 Input_Mode~%float32 Input_Position~%uint16 Input_Velocity_FF~%uint16 Input_Torque_FF~%float32 Input_Torque~%float32 Velocity_Limit~%float32 Current_Limit~%float32 Traj_Velocity_Limit~%float32 Traj_Accel_Limit~%float32 Traj_Decel_Limit~%float32 Traj_Inertia~%float32 Position~%float32 Pos_Gain~%float32 Vel_Gain~%float32 Vel_Integrator_Gain~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Odrive_command-request>))
   (cl:+ 0
      8
-     4 (cl:reduce #'cl:+ (cl:slot-value msg 'values) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ 8)))
+     1
+     4
+     4
+     4
+     2
+     2
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <Odrive_command-request>))
   "Converts a ROS message object to a list"
   (cl:list 'Odrive_command-request
     (cl:cons ':command (command msg))
-    (cl:cons ':values (values msg))
+    (cl:cons ':Axis_State (Axis_State msg))
+    (cl:cons ':Control_Mode (Control_Mode msg))
+    (cl:cons ':Input_Mode (Input_Mode msg))
+    (cl:cons ':Input_Position (Input_Position msg))
+    (cl:cons ':Input_Velocity_FF (Input_Velocity_FF msg))
+    (cl:cons ':Input_Torque_FF (Input_Torque_FF msg))
+    (cl:cons ':Input_Torque (Input_Torque msg))
+    (cl:cons ':Velocity_Limit (Velocity_Limit msg))
+    (cl:cons ':Current_Limit (Current_Limit msg))
+    (cl:cons ':Traj_Velocity_Limit (Traj_Velocity_Limit msg))
+    (cl:cons ':Traj_Accel_Limit (Traj_Accel_Limit msg))
+    (cl:cons ':Traj_Decel_Limit (Traj_Decel_Limit msg))
+    (cl:cons ':Traj_Inertia (Traj_Inertia msg))
+    (cl:cons ':Position (Position msg))
+    (cl:cons ':Pos_Gain (Pos_Gain msg))
+    (cl:cons ':Vel_Gain (Vel_Gain msg))
+    (cl:cons ':Vel_Integrator_Gain (Vel_Integrator_Gain msg))
 ))
 ;//! \htmlinclude Odrive_command-response.msg.html
 
@@ -409,10 +738,10 @@
   "steering/Odrive_commandResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<Odrive_command-response>)))
   "Returns md5sum for a message object of type '<Odrive_command-response>"
-  "58b88c37419d5be4e900c845f70ccf1e")
+  "82e9f30ff634c6c0e7b35b96a15643a9")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'Odrive_command-response)))
   "Returns md5sum for a message object of type 'Odrive_command-response"
-  "58b88c37419d5be4e900c845f70ccf1e")
+  "82e9f30ff634c6c0e7b35b96a15643a9")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Odrive_command-response>)))
   "Returns full string definition for message of type '<Odrive_command-response>"
   (cl:format cl:nil "int32 Axis_Error~%int8 Axis_State~%int32 Active_Errors~%int32 Disarm_Reason~%int32 Pos_Estimate~%int32 Vel_Estimate~%int32 Iq_Setpoint~%int32 Iq_Measured~%int32 FET_Temperature~%int32 Motor_Temperature~%int32 Vbus_Voltage~%int32 Vbus_Current~%~%~%"))

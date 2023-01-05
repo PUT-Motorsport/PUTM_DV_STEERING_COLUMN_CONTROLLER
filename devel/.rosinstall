@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/mateusz/odrive_workspace/PUTM_DV_STEERING_COLUMN_CONTROLLER/devel/setup.sh
+    local-name: /home/putm/devel/setup.sh

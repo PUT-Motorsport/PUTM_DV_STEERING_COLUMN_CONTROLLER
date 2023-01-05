@@ -13,9 +13,23 @@ void Communication::roscom::Send_command(std::vector<double> args)
 {  
     srv.request.command = args[0];
     args.erase(args.begin());
-    srv.request.values = args;
+    switch((int)(srv.request.command))
+    {
+        case SET_AXIS_REQUESTED_STATE:
+            srv.request.Axis_State = (int)(args.front());
+            break;
+        case SET_CONTROLLER_MODE:
+            srv.request.Control_Mode = (int)args.front();
+            srv.request.Input_Mode = (int)args.back();
+            break;
+        case SET_INPUT_POS:
+            srv.request.Input_Position = args.front();
+            srv.request.Input_Velocity_FF = args[1];
+            srv.request.Input_Torque_FF   = args.back();
+        case SET_ABSOLUTE_POSITION:
+            srv.request.Position = args.front();
+    }
     ROS_INFO("Sending...");
-
     if (CAN_Client.call(srv))
     {
         ROS_INFO("ok");

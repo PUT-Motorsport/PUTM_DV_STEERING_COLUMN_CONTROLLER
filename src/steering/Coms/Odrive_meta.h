@@ -14,7 +14,7 @@
 #define SET_INPUT_POS               0x00C
 #define SET_INPUT_VEL               0x00D
 #define SET_INPUT_TORQUE            0x00E
-#define STE_LIMITS                  0x00F
+#define SET_LIMITS                  0x00F
 #define START_ANTICOGGING           0x010
 #define SET_TRAJ_VEL_LIMITS         0x011
 #define SET_TRAJ_ACCEL_LIMIT        0x012
