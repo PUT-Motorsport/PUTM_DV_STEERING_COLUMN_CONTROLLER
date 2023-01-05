@@ -15,16 +15,19 @@ bool CanTransmitter::transmit_odrive_rtr(steering::Odrive_command::Request &req,
   {
     PUTM_CAN::WheelTemp_main can_msg;
     can_frame frame;
-	  frame.can_dlc = (uint16_t)1U;
-    frame.can_id  = (uint16_t)7U;
+    can_frame frame2;
+    
+    frame.can_id  = (uint16_t)10U|CAN_RTR_FLAG;
+	  frame.can_dlc = (uint16_t)0U;
 
     can_msg.wheelTemp[0] = (uint8_t)req.values[0];
 
 	  auto can_data = reinterpret_cast<uint8_t*>(&can_msg);
 
     std::copy(&can_data[0], &can_data[PUTM_CAN::WHEELTEMP_MAIN_CAN_DLC], frame.data);
-
-	  write(s, &frame, sizeof(struct can_frame));
+    write(s, &frame, sizeof(struct can_frame));
+    read(s, &frame2, sizeof(struct can_frame)); // Check for errors
+    std::cout<<frame2.can_id<<" received\n";
   }
   return true;
 }
