@@ -9,23 +9,17 @@ class CanTransmitter : public CanBase
 {
 
     public:
-
-        void executeCB(const steering::Steering_loopGoalConstPtr &goal);
-        bool Odrive_Service_Callback(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp);
+        void set_odrive_position(const steering::Steering_loopGoalConstPtr &goal);
+        bool transmit_odrive_rtr(steering::Odrive_command::Request &req, steering::Odrive_command::Response &resp);
         CanTransmitter(); 
 
     private:
-        ros::Subscriber subscriber_Apps_main;
-        ros::Subscriber subscriber_WheelTemp_main;
-        // subscribers
-        ros::ServiceServer ODrive_Service = n.advertiseService("Odrive_command", &CanTransmitter::Odrive_Service_Callback ,this);
         // services
+        ros::ServiceServer ODrive_Service = n.advertiseService("Odrive_command", &CanTransmitter::transmit_odrive_rtr ,this);
+        
+        // actions
         Action_Server Odrive_Action_Server;
         steering::Steering_loopFeedback feedback;
         steering::Steering_loopResult result;
 
-        // actions
-        void transmit_Apps_main(const package_rostocan::Apps_main::ConstPtr& ros_msg);
-        void transmit_WheelTemp_main(const package_rostocan::WheelTemp_main::ConstPtr& ros_msg);
-        // transmit_
 };
