@@ -54,11 +54,12 @@ find_package(Boost REQUIRED COMPONENTS system)
 #)
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  Odrive_command.srv
-  Desired_angle.srv
-)
+#add_service_files(
+ 
+ #FILES
+ #Odrive_command.srv
+  #Desired_angle.srv
+#)
 
 ## Generate actions in the 'action' folder
 add_action_files( 

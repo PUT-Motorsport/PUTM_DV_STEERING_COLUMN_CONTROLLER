@@ -12,9 +12,7 @@
 using namespace std;
 
 Communication::semafora sem1;
-Communication::roscom *ROS_Handler;
 Steering_Column::T_Odrive Odrive;
-Communication::Common_Space Shared_Variables; 
 
 void Controll_Loop();
 
@@ -23,8 +21,6 @@ int main(int argc, char **argv)
     thread Read(Read_Terminal_async);
 
     ros::init(argc, argv, "steering_node");
-
-    ROS_Handler = new Communication::roscom();
 
     while(sem1.State != Communication::semafora::STOP)
     {
