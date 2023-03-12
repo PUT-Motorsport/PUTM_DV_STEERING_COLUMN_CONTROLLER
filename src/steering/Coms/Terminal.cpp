@@ -1,6 +1,6 @@
 #include "Terminal.hpp"
 #include "../Odrive/Odrive.hpp"
-#include "Odrive_meta.h"
+#include "../Odrive/Odrive_meta.h"
 
 using namespace boost::asio;
 using namespace std;

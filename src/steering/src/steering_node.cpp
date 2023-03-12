@@ -29,6 +29,8 @@ int main(int argc, char **argv)
         {
             case Communication::semafora::IDLING:
                 //Can change settings or send individual move commands.
+                Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
+                Odrive.Get_Position_Estimate();
                 //cout << "idling" << endl;
             break;
 
@@ -53,7 +55,6 @@ int main(int argc, char **argv)
             break;
         }
         //std::this_thread::sleep_for(std::chrono::seconds(2));
-        ros::spinOnce();
     }
     Read.join();
     return 0;

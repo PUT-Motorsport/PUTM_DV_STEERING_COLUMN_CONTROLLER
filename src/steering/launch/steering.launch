@@ -1,0 +1,3 @@
+<launch>
+  <node name="steering_node" pkg="steering" type="steering_node" output="screen"/>
+</launch>
