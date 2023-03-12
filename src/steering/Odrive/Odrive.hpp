@@ -76,7 +76,7 @@ namespace Steering_Column
 
         void Startup_procedure();
         void Send_command(std::vector<double> args);
-        void Set_Position(double position);
+        void Set_Position(float position);
         double Calculate_Displacement(double desired_steer_angle);
     };
 }

@@ -30,8 +30,8 @@ int main(int argc, char **argv)
             case Communication::semafora::IDLING:
                 //Can change settings or send individual move commands.
                 //Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
+                //Odrive.Set_Position(1.2);
                 //Odrive.Get_Position_Estimate();
-                Odrive.Set_Controller_Mode();
                 //cout << "idling" << endl;
             break;
 
@@ -51,7 +51,6 @@ int main(int argc, char **argv)
 
             case Communication::semafora::CHANGE:
                 //Do naprawienia bo chuj wie ocb.
-                Odrive.Send_command(grab_command());
                 sem1.State = Communication::semafora::RUN_STATES::IDLING;
             break;
         }

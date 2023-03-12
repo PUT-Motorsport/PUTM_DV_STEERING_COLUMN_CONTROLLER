@@ -1,17 +1,9 @@
 #include "Terminal.hpp"
 #include "../Odrive/Odrive.hpp"
 
-using namespace boost::asio;
 using namespace std;
 
 Communication::semafora sem1;
-
-std::vector<double> args;
-
-std::vector<double> grab_command()
-{
-    return args;
-}
 
 void Read_Terminal_async()
 {
@@ -32,16 +24,13 @@ void Read_Terminal_async()
             sem1.State = Communication::semafora::RUN_STATES::STOP;
         }
         else if(input == "setstate")
-        {
-            args.clear();
-            //args.push_back((double)(SET_AXIS_REQUESTED_STATE));
-            
+        { 
             double a;
             cin >> a;
-            args.push_back(a);
-    
-            cout << input << " " << args[0] << " " << args[1] << endl;
-            sem1.State = Communication::semafora::RUN_STATES::CHANGE;
+
+            Steering_Column::T_Odrive odrive;
+            odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
+           // sem1.State = Communication::semafora::RUN_STATES::CHANGE;
         }
         else if(input == "exit")
         {

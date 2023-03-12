@@ -1,0 +1,3 @@
+[submodule "src/steering/PUTM_DV_ROS2CAN_2023"]
+	path = src/steering/PUTM_DV_ROS2CAN_2023
+	url = git@github.com:PUT-Motorsport/PUTM_DV_ROS2CAN_2023.git

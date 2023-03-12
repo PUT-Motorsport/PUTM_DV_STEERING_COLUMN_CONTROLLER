@@ -6,12 +6,16 @@ using namespace Steering_Column;
 
 extern Communication::semafora sem1;
 
-void T_Odrive::Set_Position(double position)
+void T_Odrive::Set_Position(float position)
 {   
-    cout << "Position set to " << position << endl;
-    uint8_t data[8];
-    can_setSignal<int>(data, position, set_input_position);
+    PUTM_CAN::CAN can;
+    PUTM_CAN::Odrive_Set_Input_Position pos;   
+    pos.Input_Pos = position;
+    pos.Torque_FF = 0;
+    pos.Vel_FF = 0;
     //Send frame
+    can.connect();
+    can.transmit(pos);
 }
 void T_Odrive::Startup_procedure()
 {
@@ -27,16 +31,19 @@ void T_Odrive::Send_command(std::vector<double> args)
 }
 void T_Odrive::Set_Controller_Mode()
 {
-    uint8_t data[8];
-    can_setSignal<int>(data, POSITION_CONTROL_MODE, set_control_mode);
-    can_setSignal<int>(data, TRAP_TRAJ_MODE, set_input_mode);
-    //Send frame
-
+    PUTM_CAN::Odrive_Set_Controller_Mode odrivecntrl {
+        .Control_Mode = T_Odrive::CLOSED_LOOP_CONTROL,
+        .Input_Mode = 5
+    };
 }
 void T_Odrive::Set_State(T_Odrive::Odrive_Axis_States state)
 {
-    uint8_t data[8];
-    can_setSignal<float>(data, state, set_axis_requested_state);
+    PUTM_CAN::CAN can;
+    can.connect();
+    PUTM_CAN::Odrive_Set_Axis_State set_state{
+        .Axis_Requested_State = state
+    };
+    can.transmit(set_state);
     //Send frame
 }
 float T_Odrive::Get_Position_Estimate()
