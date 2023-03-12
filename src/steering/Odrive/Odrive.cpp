@@ -9,6 +9,9 @@ extern Communication::semafora sem1;
 void T_Odrive::Set_Position(double position)
 {   
     cout << "Position set to " << position << endl;
+    uint8_t data[8];
+    can_setSignal<int>(data, position, set_input_position);
+    //Send frame
 }
 void T_Odrive::Startup_procedure()
 {
@@ -24,25 +27,25 @@ void T_Odrive::Send_command(std::vector<double> args)
 }
 void T_Odrive::Set_Controller_Mode()
 {
+    uint8_t data[8];
+    can_setSignal<int>(data, POSITION_CONTROL_MODE, set_control_mode);
+    can_setSignal<int>(data, TRAP_TRAJ_MODE, set_input_mode);
+    //Send frame
 
 }
 void T_Odrive::Set_State(T_Odrive::Odrive_Axis_States state)
 {
-    //Create frame
-    //can_Message_t msg {1, false, false, 8, 0};
     uint8_t data[8];
-    //Code frame
-    can_setSignal<float>(data, 1.1, set_input_position);
-    //Send
+    can_setSignal<float>(data, state, set_axis_requested_state);
+    //Send frame
 }
 float T_Odrive::Get_Position_Estimate()
 {
     //Receive frame
     uint8_t data[8];
-    //Code frame
     can_setSignal<float>(data, 2.2, set_input_position);
-    //Decode and return
     float a = can_getSignal<float>(data, get_encoder_position_estimates);
+    return a;
 }
 double T_Odrive::Calculate_Displacement(double desired_steer_angle)
 {

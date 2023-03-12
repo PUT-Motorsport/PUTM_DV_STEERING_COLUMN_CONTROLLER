@@ -1,6 +1,5 @@
 #include "Terminal.hpp"
 #include "../Odrive/Odrive.hpp"
-#include "../Odrive/Odrive_meta.h"
 
 using namespace boost::asio;
 using namespace std;
@@ -35,7 +34,7 @@ void Read_Terminal_async()
         else if(input == "setstate")
         {
             args.clear();
-            args.push_back((double)(SET_AXIS_REQUESTED_STATE));
+            //args.push_back((double)(SET_AXIS_REQUESTED_STATE));
             
             double a;
             cin >> a;

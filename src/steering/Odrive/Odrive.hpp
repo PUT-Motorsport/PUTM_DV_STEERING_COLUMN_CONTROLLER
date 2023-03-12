@@ -8,6 +8,10 @@
 
 #include "../PUTM_DV_ROS2CAN_2023/Inc/putm_can_interface.hpp"
 
+#define POSITION_CONTROL_MODE           3
+#define TRAP_TRAJ_MODE                  5
+#define GEAR_RATIO                     10
+
 namespace Steering_Column
 {
     class T_Odrive{
@@ -24,7 +28,7 @@ namespace Steering_Column
            const can_Signal_t get_encoder_position_estimates {0, 32, true, 1, 0};
            const can_Signal_t get_encoder_velocity_estimates {4, 32, true, 1, 0};
            const can_Signal_t set_control_mode               {0, 32, true, 1, 0};
-           const can_Signal_t set_input_mode                 {4, 32, true, 1, 0};
+           const can_Signal_t set_input_mode                 {32, 32, true, 1, 0};
            const can_Signal_t set_input_position             {0, 32, true, 1, 0};
 
         //Methods
