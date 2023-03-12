@@ -22,16 +22,16 @@ class SteeringAction{
 
     public:
 
-    SteeringAction(std::string name) :  
-    Action_server(n, name, boost::bind(&SteeringAction::executeCB, this, _1), false), action_name_(name)
-    {
-        Action_server.start();
-    }
+    // SteeringAction(std::string name) :  
+    // // Action_server(n, name, boost::bind(&SteeringAction::executeCB, this, _1), false), action_name_(name)
+    // // {
+    // //     Action_server.start();
+    // // }
 
-    void executeCB(const steering::Steering_loopActionGoalConstPtr &goal)
-    {
+    // // void executeCB(const steering::Steering_loopActionGoalConstPtr &goal)
+    // // {
   
-    }
+    // // }
 
 
     

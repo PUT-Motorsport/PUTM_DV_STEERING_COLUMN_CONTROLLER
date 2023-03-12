@@ -29,17 +29,20 @@ void T_Odrive::Set_Controller_Mode()
 void T_Odrive::Set_State(T_Odrive::Odrive_Axis_States state)
 {
     //Create frame
-    can_Message_t msg {1, false, false, 8, 0};
+    //can_Message_t msg {1, false, false, 8, 0};
+    uint8_t data[8];
     //Code frame
-    can_setSignal<float>(msg, 1.1, set_input_position);
+    can_setSignal<float>(data, 1.1, set_input_position);
     //Send
 }
 float T_Odrive::Get_Position_Estimate()
 {
     //Receive frame
-    can_Message_t msg {1, false, false, 8, 0};
+    uint8_t data[8];
+    //Code frame
+    can_setSignal<float>(data, 2.2, set_input_position);
     //Decode and return
-    return can_getSignal<float>(msg, get_encoder_position_estimates);
+    float a = can_getSignal<float>(data, get_encoder_position_estimates);
 }
 double T_Odrive::Calculate_Displacement(double desired_steer_angle)
 {
