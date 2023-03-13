@@ -1,0 +1,37 @@
+odrv0.erase_configuration()
+odrv0.reboot()
+odrv0.axis1.encoder.config.use_index = True
+odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+odrv0.axis1.encoder.config.pre_calibrated = True
+odrv0.axis1.motor.config.pre_calibrated = True
+odrv0.save_configuration()
+odrv0.reboot()
+
+odrv0.axis1.motor.config.current_lim = 50
+odrv0.axis1.controller.config.vel_limit = 4
+odrv0.config.dc_max_negative_current = -1
+
+odrv0.axis1.config.can.node_id =  5
+odrv0.can.config.baud_rate = 1000000
+odrv0.axis0.config.can.heartbeat_rate_ms = 0
+odrv0.axis0.config.can.encoder_rate_ms = 0
+odrv0.axis1.config.can.heartbeat_rate_ms = 500
+odrv0.axis1.config.can.encoder_rate_ms = 10
+
+odrv0.axis1.controller.config.pos_gain = 90.0
+odrv0.axis1.controller.config.vel_gain = 0.31999999
+odrv0.axis1.controller.config.vel_integrator_gain = 2.0899999999
+
+odrv0.save_configuration()
+
+odrv0.axis1.trap_traj.config.accel_limit = 10
+odrv0.axis1.trap_traj.config.decel_limit = 10
+odrv0.axis1.trap_traj.config.vel_limit = 100
+
+odrv0.save_configuration()
+
+#encoder offset from "zero" = -0.969329833984375
+
+odrv0.axis1.encoder.config.index_offset = -0.96932983398
+
+
