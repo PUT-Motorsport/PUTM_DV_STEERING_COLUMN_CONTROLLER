@@ -31,6 +31,8 @@ namespace Steering_Column
            const can_Signal_t set_input_mode                 {32, 32, true, 1, 0};
            const can_Signal_t set_input_position             {0, 32, true, 1, 0};
 
+           PUTM_CAN::CAN can;
+
         //Methods
         public:
         public:
@@ -38,6 +40,7 @@ namespace Steering_Column
         {
             if(is_odrive_alive() == true)
             {
+                can.connect();
                 std::cout << "Odrive is online" << std::endl;
                 current_state = Odrive_states::IDLING;
             }
@@ -53,13 +56,13 @@ namespace Steering_Column
             OFFLINE,
         }current_state;
 
-        enum Odrive_Axis_States{
+        enum class Odrive_Axis_States{
             UNDEFINED,
             IDLE,
             STARTUP_SEQUENCE,
             FULL_CALIBRATION_SEQUENCE,
             MOTOR_CALIBRATION,
-            ENCODER_INDEX_SEARCH,
+            ENCODER_INDEX_SEARCH = 6,
             ENCODER_OFFSET_CALIBRATION,
             CLOSED_LOOP_CONTROL,
             LOCKIN_SPIN,
