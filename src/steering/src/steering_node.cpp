@@ -23,12 +23,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "steering_node");
     Communication::SteeringAction st;
 
-    Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
-    //ros::Duration(10).sleep();
-    Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
-    //ros::Duration(1).sleep();
-    Odrive.Set_Controller_Mode();
-    //ros::Duration(1).sleep();
+    Odrive.Startup_procedure();
 
     while(sem1.State != Communication::semafora::STOP)
     {

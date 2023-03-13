@@ -17,14 +17,29 @@ void T_Odrive::Set_Position(float position)
 }
 void T_Odrive::Startup_procedure()
 {
-
+    Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
+    PUTM_CAN::Odrive_Heartbeat heartbeat;
+    do{
+        can.receive(heartbeat,PUTM_CAN::NO_TIMEOUT);
+        std::cout << int(heartbeat.Axis_State) << std::endl;
+    }
+    while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
+    //ros::Duration(10).sleep();
+    Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
+    //ros::Duration(1).sleep();
+    Set_Controller_Mode();
+    //ros::Duration(1).sleep();
 }
 bool T_Odrive::is_odrive_alive()
 {
+
+
     return true;
 }
 void T_Odrive::Send_command(std::vector<double> args)
 {
+
+
 
 }
 void T_Odrive::Set_Controller_Mode()
