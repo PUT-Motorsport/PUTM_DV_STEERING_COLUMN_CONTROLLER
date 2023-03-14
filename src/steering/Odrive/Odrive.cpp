@@ -24,22 +24,34 @@ void T_Odrive::Startup_procedure()
         std::cout << int(heartbeat.Axis_State) << std::endl;
     }
     while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
-    //ros::Duration(10).sleep();
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
-    //ros::Duration(1).sleep();
     Set_Controller_Mode();
-    //ros::Duration(1).sleep();
+}
+void T_Odrive::fast_startup()
+{
+    Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::ENCODER_INDEX_SEARCH);
+    PUTM_CAN::Odrive_Heartbeat heartbeat;
+    do{
+        can.receive(heartbeat,PUTM_CAN::NO_TIMEOUT);
+        std::cout << int(heartbeat.Axis_State) << std::endl;
+    }
+    while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
+    Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
+    Set_Controller_Mode();
+    Set_Position(0);
 }
 bool T_Odrive::is_odrive_alive()
 {
-
-
-    return true;
+    PUTM_CAN::Odrive_Heartbeat heartbeat;
+    if(can.receive(heartbeat, 5) == PUTM_CAN::CanState::CAN_SET_TIMEOUT_ERROR){
+        return 0;
+    }
+    else{
+        return 1;
+    }
 }
 void T_Odrive::Send_command(std::vector<double> args)
 {
-
-
 
 }
 void T_Odrive::Set_Controller_Mode()

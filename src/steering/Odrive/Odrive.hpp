@@ -76,6 +76,7 @@ namespace Steering_Column
         void Set_Controller_Mode();
         int Get_Encoder_Count();
         float Get_Position_Estimate();
+        void fast_startup();
 
         void Startup_procedure();
         void Send_command(std::vector<double> args);
