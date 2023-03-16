@@ -1,2 +1,0 @@
-set(steering_MESSAGE_FILES "/home/putm/devel/share/steering/msg/Steering_loopAction.msg;/home/putm/devel/share/steering/msg/Steering_loopActionGoal.msg;/home/putm/devel/share/steering/msg/Steering_loopActionResult.msg;/home/putm/devel/share/steering/msg/Steering_loopActionFeedback.msg;/home/putm/devel/share/steering/msg/Steering_loopGoal.msg;/home/putm/devel/share/steering/msg/Steering_loopResult.msg;/home/putm/devel/share/steering/msg/Steering_loopFeedback.msg")
-set(steering_SERVICE_FILES "")
