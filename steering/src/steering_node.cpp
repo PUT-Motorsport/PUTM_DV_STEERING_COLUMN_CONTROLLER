@@ -18,10 +18,12 @@ void Controll_Loop();
 
 int main(int argc, char **argv)
 {
+    ros::init(argc, argv, "steering_node");
+
     thread Read(Read_Terminal_async);
 
-    ros::init(argc, argv, "steering_node");
-    Communication::SteeringAction st;
+    Communication::Data data;
+    thread Send_Data(&Communication::Data::data_thread, &data);
 
     Odrive.Startup_procedure();
 
@@ -48,21 +50,20 @@ int main(int argc, char **argv)
             break;
 
             case Communication::semafora::RUNNING:
-                //Send debug info and data.
+                //Run controll loop.
             break;
 
             case Communication::semafora::STOP:
-                //End thread and go to idle
+                //End thread and go to idle.
                 
             break;
 
             case Communication::semafora::CHANGE:
-                //Do naprawienia bo chuj wie ocb.
                 sem1.State = Communication::semafora::RUN_STATES::IDLING;
             break;
         }
-        //std::this_thread::sleep_for(std::chrono::seconds(2));
     }
     Read.join();
+    Send_Data.join();
     return 0;
 }

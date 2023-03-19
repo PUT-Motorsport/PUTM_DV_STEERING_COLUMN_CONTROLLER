@@ -4,9 +4,9 @@
 #include <vector>
 #include "../Coms/Terminal.hpp"
 #include "../Coms/Communication.hpp"
-#include "can_heplers.hpp"
+#include "steering/Odrive_data.h"
 
-#include "../PUTM_DV_ROS2CAN_2023/Inc/putm_can_interface.hpp"
+#include "../PUTM_DV_CAN_LIBRARY/Inc/putm_can_interface.hpp"
 
 #define POSITION_CONTROL_MODE           3
 #define TRAP_TRAJ_MODE                  5
@@ -22,19 +22,7 @@ namespace Steering_Column
             int accel_limit;
             int torque_limit;
             float desired_steer_angle;
-        private:
-
-           const can_Signal_t set_axis_requested_state       {0, 32, true, 1, 0};
-           const can_Signal_t get_encoder_position_estimates {0, 32, true, 1, 0};
-           const can_Signal_t get_encoder_velocity_estimates {4, 32, true, 1, 0};
-           const can_Signal_t set_control_mode               {0, 32, true, 1, 0};
-           const can_Signal_t set_input_mode                 {32, 32, true, 1, 0};
-           const can_Signal_t set_input_position             {0, 32, true, 1, 0};
-
-           PUTM_CAN::CAN can;
-
         //Methods
-        public:
         public:
         T_Odrive()
         {
@@ -69,19 +57,30 @@ namespace Steering_Column
             ENCODER_DIR_FIND,
         };
 
-        bool is_odrive_alive();
-        void Set_State(Odrive_Axis_States);
-        float Get_Voltage();
-        float Get_Current();
-        void Set_Controller_Mode();
-        int Get_Encoder_Count();
-        float Get_Position_Estimate();
-        void fast_startup();
+        private:
 
+           PUTM_CAN::CAN can;
+
+            bool is_odrive_alive();
+
+            float Get_Voltage();
+            float Get_Current();
+            int   Get_Encoder_Count();
+            float Get_Position_Estimate();
+            int   Get_Axis_State();
+            int   Get_Error();
+
+            void Set_Controller_Mode();
+
+            double Calculate_Displacement(double desired_steer_angle);
+
+        public:
+
+        void fast_startup();
         void Startup_procedure();
-        void Send_command(std::vector<double> args);
         void Set_Position(float position);
-        double Calculate_Displacement(double desired_steer_angle);
+        steering::Odrive_data return_data();
+        void Set_State(Odrive_Axis_States);
     };
 }
 

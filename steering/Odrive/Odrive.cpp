@@ -4,8 +4,6 @@
 using namespace std;
 using namespace Steering_Column;
 
-extern Communication::semafora sem1;
-
 void T_Odrive::Set_Position(float position)
 {   
     PUTM_CAN::Odrive_Set_Input_Position pos;   
@@ -50,10 +48,7 @@ bool T_Odrive::is_odrive_alive()
         return 1;
     }
 }
-void T_Odrive::Send_command(std::vector<double> args)
-{
 
-}
 void T_Odrive::Set_Controller_Mode()
 {
     PUTM_CAN::Odrive_Set_Controller_Mode odrivecntrl {
@@ -82,8 +77,30 @@ float T_Odrive::Get_Position_Estimate()
     return enc.Pos_Estimate;
 
 }
+
+int T_Odrive::Get_Axis_State()
+{
+
+    return 1;
+}
+
+int T_Odrive::Get_Error()
+{
+
+
+    return 1;
+}
+
 double T_Odrive::Calculate_Displacement(double desired_steer_angle)
 {
     float odrive_position = Get_Position_Estimate();
     return desired_steer_angle;
+}
+
+steering::Odrive_data T_Odrive::return_data()
+{
+    steering::Odrive_data data;
+    data.axis_state = Get_Axis_State();
+    data.odrive_errors = Get_Error();
+    return data;
 }

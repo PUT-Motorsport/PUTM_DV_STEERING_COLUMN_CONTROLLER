@@ -1,0 +1,8 @@
+float32 odrive_position
+float32 front_wheels_angle
+float32 desired_steer_angle
+float32 iq_current
+int8 odrive_state
+int8 axis_state
+int8 odrive_errors
+int8 temperature

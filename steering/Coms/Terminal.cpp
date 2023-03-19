@@ -30,7 +30,7 @@ void Read_Terminal_async()
 
             Steering_Column::T_Odrive odrive;
             odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
-           // sem1.State = Communication::semafora::RUN_STATES::CHANGE;
+            //sem1.State = Communication::semafora::RUN_STATES::CHANGE;
         }
         else if(input == "exit")
         {

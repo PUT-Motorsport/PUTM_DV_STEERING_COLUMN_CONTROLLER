@@ -19,6 +19,4 @@ struct semafora{
 };
 
 }
-
 void Read_Terminal_async();
-std::vector<double> grab_command();
