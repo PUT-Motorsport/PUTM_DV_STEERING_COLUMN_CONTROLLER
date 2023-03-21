@@ -13,6 +13,7 @@ using namespace std;
 
 Communication::semafora sem1;
 Steering_Column::T_Odrive Odrive;
+Communication::Joystick joy;
 
 void Controll_Loop();
 

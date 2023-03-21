@@ -26,9 +26,9 @@ namespace Steering_Column
         public:
         T_Odrive()
         {
+            can.connect();
             if(is_odrive_alive() == true)
             {
-                can.connect();
                 std::cout << "Odrive is online" << std::endl;
                 current_state = Odrive_states::IDLING;
             }

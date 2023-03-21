@@ -12,7 +12,6 @@ using namespace Communication;
 void Joystick::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
     float a = joy->axes[0];
-    std::cout << a << std::endl;
     Odrive.Set_Position(-2*(joy->axes[0]));
 }
 
