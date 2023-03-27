@@ -13,20 +13,22 @@ using namespace std;
 
 Communication::semafora sem1;
 Steering_Column::T_Odrive Odrive;
-Communication::Joystick joy;
 
 void Controll_Loop();
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "steering_node");
+    ros::Time::init();
+
+    Communication::Joystick joy;
 
     thread Read(Read_Terminal_async);
 
     Communication::Data data;
     thread Send_Data(&Communication::Data::data_thread, &data);
 
-    Odrive.Startup_procedure();
+    //Odrive.Startup_procedure();
 
     while(sem1.State != Communication::semafora::STOP)
     {
@@ -42,14 +44,9 @@ int main(int argc, char **argv)
                 //Odrive.Get_Position_Estimate();
                 //Odrive.Set_Position(1.2);
                 //cout << "idling" << endl;
-                ros::spin();
+                ros::Duration(1, 0).sleep();
             break;
-
-            case Communication::semafora::START:
-                //Runs a controll loop. Then change state to RUNNING.
-                sem1.State = Communication::semafora::RUN_STATES::RUNNING;
-            break;
-
+            
             case Communication::semafora::RUNNING:
                 //Run controll loop.
             break;
@@ -59,8 +56,14 @@ int main(int argc, char **argv)
                 
             break;
 
-            case Communication::semafora::CHANGE:
-                sem1.State = Communication::semafora::RUN_STATES::IDLING;
+            case Communication::semafora::JOY_MODE:
+                //Run in joystick mode
+                ros::spin();
+            break;
+
+            case Communication::semafora::ERROR:
+                 ROS_INFO("ODrive Error");
+                ros::Duration(5, 0).sleep();
             break;
         }
     }

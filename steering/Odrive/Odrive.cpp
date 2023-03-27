@@ -24,6 +24,8 @@ void T_Odrive::Startup_procedure()
     while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
     Set_Controller_Mode();
+    Set_Position(0);
+    ROS_INFO("Odrive calibrated and ready");
 }
 void T_Odrive::fast_startup()
 {
@@ -41,7 +43,7 @@ void T_Odrive::fast_startup()
 bool T_Odrive::is_odrive_alive()
 {
     PUTM_CAN::Odrive_Heartbeat heartbeat;
-    if(can.receive(heartbeat, 5) == PUTM_CAN::CanState::CAN_SET_TIMEOUT_ERROR){
+    if(can.receive(heartbeat, 5) == PUTM_CAN::CanState::CAN_READ_ERROR){
         return 0;
     }
     else{

@@ -12,6 +12,8 @@
 #define TRAP_TRAJ_MODE                  5
 #define GEAR_RATIO                     10
 
+extern Communication::semafora sem1;
+
 namespace Steering_Column
 {
     class T_Odrive{
@@ -33,6 +35,7 @@ namespace Steering_Column
                 current_state = Odrive_states::IDLING;
             }
             else{std::cout<<"Odrive heartbeat not present" << std::endl;}
+            sem1.State = Communication::semafora::RUN_STATES::ERROR;
             current_state = Odrive_states::ERROR;
         }
 
