@@ -36,6 +36,7 @@ int main(int argc, char **argv)
         switch(sem1.State)
         {
             case Communication::semafora::IDLING:
+            // 1.3 do -2.85
                 //Can change settings or send individual move commands.
                 //Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE)
                 //Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);

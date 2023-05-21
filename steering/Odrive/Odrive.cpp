@@ -24,7 +24,7 @@ void T_Odrive::Startup_procedure()
     while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
     Set_Controller_Mode();
-    Set_Position(0);
+    //Set_Position(0);
     ROS_INFO("Odrive calibrated and ready");
 }
 void T_Odrive::fast_startup()
@@ -73,11 +73,8 @@ float T_Odrive::Get_Position_Estimate()
 {
     //Receive frame
     PUTM_CAN::Odrive_Get_Encoder_Estimation enc;
-
     can.receive(enc, PUTM_CAN::NO_TIMEOUT);
-    std::cout<<enc.Pos_Estimate<<"\n";
     return enc.Pos_Estimate;
-
 }
 
 int T_Odrive::Get_Axis_State()
@@ -88,9 +85,9 @@ int T_Odrive::Get_Axis_State()
 
 int T_Odrive::Get_Error()
 {
-
-
-    return 1;
+    PUTM_CAN::Odrive_Get_Error error;
+    can.receive(error, 5);
+    //return error.Pos_Estimate;
 }
 
 double T_Odrive::Calculate_Displacement(double desired_steer_angle)

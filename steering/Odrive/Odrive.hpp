@@ -4,6 +4,7 @@
 #include <vector>
 #include "../Coms/Terminal.hpp"
 #include "../Coms/Communication.hpp"
+
 #include "steering/Odrive_data.h"
 
 #include "../PUTM_DV_CAN_LIBRARY/Inc/putm_can_interface.hpp"
@@ -34,9 +35,10 @@ namespace Steering_Column
                 std::cout << "Odrive is online" << std::endl;
                 current_state = Odrive_states::IDLING;
             }
-            else{std::cout<<"Odrive heartbeat not present" << std::endl;}
-            sem1.State = Communication::semafora::RUN_STATES::ERROR;
-            current_state = Odrive_states::ERROR;
+            else{std::cout<<"Odrive heartbeat not present" << std::endl;
+                sem1.State = Communication::semafora::RUN_STATES::ERROR;
+                current_state = Odrive_states::ERROR;
+                }
         }
 
         enum Odrive_states{
@@ -69,21 +71,22 @@ namespace Steering_Column
             float Get_Voltage();
             float Get_Current();
             int   Get_Encoder_Count();
-            float Get_Position_Estimate();
+            //float Get_Position_Estimate();
             int   Get_Axis_State();
-            int   Get_Error();
+            //int   Get_Error();
 
             void Set_Controller_Mode();
 
             double Calculate_Displacement(double desired_steer_angle);
 
         public:
-
+int   Get_Error();
         void fast_startup();
         void Startup_procedure();
         void Set_Position(float position);
         steering::Odrive_data return_data();
         void Set_State(Odrive_Axis_States);
+        float Get_Position_Estimate();
     };
 }
 
