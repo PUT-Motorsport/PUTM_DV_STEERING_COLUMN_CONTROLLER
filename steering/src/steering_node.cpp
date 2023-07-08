@@ -8,18 +8,15 @@
 #include <string>
 #include <future>
 #include <thread>
+#define FMT_HEADER_ONLY
+#include <fmt/core.h>
 
 #include <chrono>
 
 using namespace std;
 
 Communication::semafora sem1;
-Steering_Column::T_Odrive Odrive;
-
-void OdriveCallback(const PUTM_EV_ROS2CAN::Odrive &OdriveData)
-{
-
-}
+Steering_Column::T_Odrive *Odrive_ptr;
 
 void Controll_Loop();
 
@@ -28,10 +25,9 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "steering_node");
     ros::Time::init();
 
-    ros::NodeHandle OdriveHandle;
-    ros::Subscriber OdriveSub;
-
     Communication::Joystick joy;
+    Steering_Column::T_Odrive Odrive;
+    Odrive_ptr = &Odrive;
 
     thread Read(Read_Terminal_async);
 
@@ -46,15 +42,6 @@ int main(int argc, char **argv)
         switch(sem1.State)
         {
             case Communication::semafora::IDLING:
-            // 1.3 do -2.85
-                //Can change settings or send individual move commands.
-                //Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE)
-                //Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
-                //Odrive.Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
-                //Odrive.Set_Controller_Mode();
-                //Odrive.Get_Position_Estimate();
-                //Odrive.Set_Position(1.2);
-                //cout << "idling" << endl;
                 ros::Duration(1).sleep();
                 ROS_INFO("[Steering] waiting...");
             break;
@@ -64,13 +51,14 @@ int main(int argc, char **argv)
             break;
 
             case Communication::semafora::STOP:
-                //End thread and go to idle.
+                //End and go to idle.
                 
             break;
 
             case Communication::semafora::JOY_MODE:
                 //Run in joystick mode
-                ros::spinOnce();
+                ros::spin();
+                ROS_INFO("[Steering] Encoder estimate: %f", Odrive.EncoderEstimate);
             break;
 
             case Communication::semafora::ERROR:

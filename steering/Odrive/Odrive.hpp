@@ -17,7 +17,7 @@ extern Communication::semafora sem1;
 namespace Steering_Column
 {
     class T_Odrive{
-        private:
+        public:
         //Data
             float EncoderEstimate;
         //Methods
