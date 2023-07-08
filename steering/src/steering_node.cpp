@@ -25,10 +25,16 @@ int main(int argc, char **argv)
 
     thread Read(Read_Terminal_async);
 
-    Communication::Data data;
-    thread Send_Data(&Communication::Data::data_thread, &data);
+    ROS_INFO("Steering online");
 
-    //Odrive.Startup_procedure();
+    PUTM_CAN::CanRx<PUTM_CAN::Odrive_Heartbeat> odrive_heartbeat ("can0", PUTM_CAN::NO_TIMEOUT);
+    PUTM_CAN::CanRx<PUTM_CAN::Odrive_Heartbeat> odrive_heartbeat_timeout ("can0", 1);
+    auto odrive_hr = odrive_heartbeat.receive();
+
+    ROS_INFO("Odrive online");
+
+    Odrive.Startup_procedure();
+    sem1.State = Communication::semafora::JOY_MODE;
 
     while(sem1.State != Communication::semafora::STOP)
     {
@@ -45,7 +51,8 @@ int main(int argc, char **argv)
                 //Odrive.Get_Position_Estimate();
                 //Odrive.Set_Position(1.2);
                 //cout << "idling" << endl;
-                ros::Duration(1, 0).sleep();
+                ros::Duration(1).sleep();
+                ROS_INFO("[Steering] waiting...");
             break;
             
             case Communication::semafora::RUNNING:
@@ -59,16 +66,24 @@ int main(int argc, char **argv)
 
             case Communication::semafora::JOY_MODE:
                 //Run in joystick mode
-                ros::spin();
+                ros::spinOnce();
+                try{
+                odrive_hr = odrive_heartbeat_timeout.receive();
+                }
+                catch(std::runtime_error err)
+                {
+                    sem1.State = Communication::semafora::ERROR;
+                }
             break;
 
             case Communication::semafora::ERROR:
-                 ROS_INFO("ODrive Error");
-                ros::Duration(5, 0).sleep();
+                ROS_INFO("ODrive Error");
+                odrive_hr = odrive_heartbeat.receive();
+                Odrive.Startup_procedure();
+                sem1.State = Communication::semafora::JOY_MODE;
             break;
         }
     }
     Read.join();
-    Send_Data.join();
     return 0;
 }

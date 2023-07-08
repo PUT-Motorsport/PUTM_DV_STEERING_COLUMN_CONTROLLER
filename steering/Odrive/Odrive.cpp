@@ -1,8 +1,12 @@
 #include "Odrive.hpp"
 #include <iostream>
+#include <ros/ros.h>
 
 using namespace std;
 using namespace Steering_Column;
+
+PUTM_CAN::CanRx<PUTM_CAN::Odrive_Heartbeat> odrive_heartbeat ("can0", PUTM_CAN::NO_TIMEOUT);
+PUTM_CAN::CanTx can_tx("can0");
 
 void T_Odrive::Set_Position(float position)
 {   
@@ -10,21 +14,17 @@ void T_Odrive::Set_Position(float position)
     pos.Input_Pos = position;
     pos.Torque_FF = 0;
     pos.Vel_FF = 0;
+    can_tx.transmit(pos);
     //Send frame
-    can.transmit(pos);
+
 }
 void T_Odrive::Startup_procedure()
 {
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
-    PUTM_CAN::Odrive_Heartbeat heartbeat;
-    do{
-        can.receive(heartbeat,PUTM_CAN::NO_TIMEOUT);
-        std::cout << int(heartbeat.Axis_State) << std::endl;
-    }
-    while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
+    ros::Duration(10).sleep();
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
     Set_Controller_Mode();
-    //Set_Position(0);
+    Set_Position(0);
     ROS_INFO("Odrive calibrated and ready");
 }
 void T_Odrive::fast_startup()
@@ -32,7 +32,7 @@ void T_Odrive::fast_startup()
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::ENCODER_INDEX_SEARCH);
     PUTM_CAN::Odrive_Heartbeat heartbeat;
     do{
-        can.receive(heartbeat,PUTM_CAN::NO_TIMEOUT);
+        
         std::cout << int(heartbeat.Axis_State) << std::endl;
     }
     while(heartbeat.Axis_State != uint8_t(T_Odrive::Odrive_Axis_States::IDLE));
@@ -43,12 +43,13 @@ void T_Odrive::fast_startup()
 bool T_Odrive::is_odrive_alive()
 {
     PUTM_CAN::Odrive_Heartbeat heartbeat;
-    if(can.receive(heartbeat, 5) == PUTM_CAN::CanState::CAN_READ_ERROR){
-        return 0;
-    }
-    else{
-        return 1;
-    }
+    // if(can.receive(heartbeat, 5) == PUTM_CAN::CanState::CAN_READ_ERROR){
+    //     return 0;
+    // }
+    // else{
+    //     return 1;
+    // }
+    return true;
 }
 
 void T_Odrive::Set_Controller_Mode()
@@ -57,24 +58,24 @@ void T_Odrive::Set_Controller_Mode()
         .Control_Mode = POSITION_CONTROL_MODE,
         .Input_Mode = 5
     };
-    can.transmit(odrivecntrl);
+    
 }
 void T_Odrive::Set_State(T_Odrive::Odrive_Axis_States state)
 {
-    if(can.connect() != PUTM_CAN::CanState::CAN_OK) return;
     PUTM_CAN::Odrive_Set_Axis_State set_state
     {
         .Axis_Requested_State = (uint32_t)(state)
     };
-    can.transmit(set_state);
+    can_tx.transmit(set_state);
     //Send frame
 }
 float T_Odrive::Get_Position_Estimate()
 {
     //Receive frame
-    PUTM_CAN::Odrive_Get_Encoder_Estimation enc;
-    can.receive(enc, PUTM_CAN::NO_TIMEOUT);
-    return enc.Pos_Estimate;
+    // PUTM_CAN::Odrive_Get_Encoder_Estimation enc;
+    // can.receive(enc, PUTM_CAN::NO_TIMEOUT);
+    // return enc.Pos_Estimate;
+    return 0.0;
 }
 
 int T_Odrive::Get_Axis_State()
@@ -85,9 +86,10 @@ int T_Odrive::Get_Axis_State()
 
 int T_Odrive::Get_Error()
 {
-    PUTM_CAN::Odrive_Get_Error error;
-    can.receive(error, 5);
+    // PUTM_CAN::Odrive_Get_Error error;
+    // can.receive(error, 5);
     //return error.Pos_Estimate;
+    return -1;
 }
 
 double T_Odrive::Calculate_Displacement(double desired_steer_angle)

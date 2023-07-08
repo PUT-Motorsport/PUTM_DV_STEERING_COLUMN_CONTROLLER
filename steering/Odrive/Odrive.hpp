@@ -7,11 +7,11 @@
 
 #include "steering/Odrive_data.h"
 
-#include "../PUTM_DV_CAN_LIBRARY/Inc/putm_can_interface.hpp"
+#include "../PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS/include/can_rx.hpp"
+#include "../PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS/include/can_tx.hpp"
 
 #define POSITION_CONTROL_MODE           3
 #define TRAP_TRAJ_MODE                  5
-#define GEAR_RATIO                     10
 
 extern Communication::semafora sem1;
 
@@ -29,16 +29,15 @@ namespace Steering_Column
         public:
         T_Odrive()
         {
-            can.connect();
-            if(is_odrive_alive() == true)
-            {
-                std::cout << "Odrive is online" << std::endl;
-                current_state = Odrive_states::IDLING;
-            }
-            else{std::cout<<"Odrive heartbeat not present" << std::endl;
-                sem1.State = Communication::semafora::RUN_STATES::ERROR;
-                current_state = Odrive_states::ERROR;
-                }
+            // if(is_odrive_alive() == true)
+            // {
+            //     std::cout << "Odrive is online" << std::endl;
+            //     current_state = Odrive_states::IDLING;
+            // }
+            // else{std::cout<<"Odrive heartbeat not present" << std::endl;
+            //     sem1.State = Communication::semafora::RUN_STATES::ERROR;
+            //     current_state = Odrive_states::ERROR;
+            //     }
         }
 
         enum Odrive_states{
@@ -63,8 +62,6 @@ namespace Steering_Column
         };
 
         private:
-
-           PUTM_CAN::CAN can;
 
             bool is_odrive_alive();
 

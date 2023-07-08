@@ -1,6 +1,4 @@
 <launch>
   <node name="steering_node" pkg="steering" type="steering_node" output="screen"/>
   <node pkg="joy" type="joy_node" name="joy_node" output="screen"/>
-  <node name="ROS_Telemetry_node" pkg="ROS_Telemetry" type="ROS_Telemetry_node" output="screen"/>
-  
 </launch>

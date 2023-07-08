@@ -4,3 +4,6 @@
 [submodule "steering/PUTM_DV_CAN_LIBRARY"]
 	path = steering/PUTM_DV_CAN_LIBRARY
 	url = git@github.com:PUT-Motorsport/PUTM_DV_CAN_LIBRARY.git
+[submodule "PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS"]
+	path = PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS
+	url = git@github.com:PUT-Motorsport/PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS.git
