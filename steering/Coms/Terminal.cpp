@@ -61,15 +61,5 @@ void Read_Terminal_async()
             cin >> pos;
             odrive.Set_Position(pos);
         }
-        else if(input == "getpos")
-        {
-            Steering_Column::T_Odrive odrive;
-            cout << odrive.Get_Position_Estimate() << "\n";
-        }
-        else if(input == "error")
-        {
-            Steering_Column::T_Odrive odrive;
-            cout << odrive.Get_Error() << "\n";
-        }
     }
 }

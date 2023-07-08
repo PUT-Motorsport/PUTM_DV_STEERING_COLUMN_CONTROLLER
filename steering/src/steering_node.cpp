@@ -2,6 +2,8 @@
 #include "Communication.hpp"
 #include "Terminal.hpp"
 
+#include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
+
 #include <iostream>
 #include <string>
 #include <future>
@@ -14,6 +16,11 @@ using namespace std;
 Communication::semafora sem1;
 Steering_Column::T_Odrive Odrive;
 
+void OdriveCallback(const PUTM_EV_ROS2CAN::Odrive &OdriveData)
+{
+
+}
+
 void Controll_Loop();
 
 int main(int argc, char **argv)
@@ -21,17 +28,14 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "steering_node");
     ros::Time::init();
 
+    ros::NodeHandle OdriveHandle;
+    ros::Subscriber OdriveSub;
+
     Communication::Joystick joy;
 
     thread Read(Read_Terminal_async);
 
     ROS_INFO("Steering online");
-
-    PUTM_CAN::CanRx<PUTM_CAN::Odrive_Heartbeat> odrive_heartbeat ("can0", PUTM_CAN::NO_TIMEOUT);
-    PUTM_CAN::CanRx<PUTM_CAN::Odrive_Heartbeat> odrive_heartbeat_timeout ("can0", 1);
-    auto odrive_hr = odrive_heartbeat.receive();
-
-    ROS_INFO("Odrive online");
 
     Odrive.Startup_procedure();
     sem1.State = Communication::semafora::JOY_MODE;
@@ -67,20 +71,10 @@ int main(int argc, char **argv)
             case Communication::semafora::JOY_MODE:
                 //Run in joystick mode
                 ros::spinOnce();
-                try{
-                odrive_hr = odrive_heartbeat_timeout.receive();
-                }
-                catch(std::runtime_error err)
-                {
-                    sem1.State = Communication::semafora::ERROR;
-                }
             break;
 
             case Communication::semafora::ERROR:
                 ROS_INFO("ODrive Error");
-                odrive_hr = odrive_heartbeat.receive();
-                Odrive.Startup_procedure();
-                sem1.State = Communication::semafora::JOY_MODE;
             break;
         }
     }

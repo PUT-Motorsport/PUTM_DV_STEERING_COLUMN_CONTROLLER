@@ -5,10 +5,9 @@
 #include "../Coms/Terminal.hpp"
 #include "../Coms/Communication.hpp"
 
-#include "steering/Odrive_data.h"
+#include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
-#include "../PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS/include/can_rx.hpp"
-#include "../PUTM_DV_CAN_LIBRARY_MULTIPLE_SOCKETS/include/can_tx.hpp"
+#include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
 
 #define POSITION_CONTROL_MODE           3
 #define TRAP_TRAJ_MODE                  5
@@ -20,15 +19,16 @@ namespace Steering_Column
     class T_Odrive{
         private:
         //Data
-            int current_limit;
-            int vel_limit;;
-            int accel_limit;
-            int torque_limit;
-            float desired_steer_angle;
+            float EncoderEstimate;
         //Methods
         public:
+            ros::NodeHandle OdriveNodeHandler;
+            ros::Subscriber OdriveDataSubscriber;
+        //Callbacks
+           void OdriveHeartbeatCallback(const PUTM_EV_ROS2CAN::Odrive::ConstPtr& OdriveData);
         T_Odrive()
         {
+            OdriveDataSubscriber = OdriveNodeHandler.subscribe<PUTM_EV_ROS2CAN::Odrive>("OdriveDataCAN", 10, &T_Odrive::OdriveHeartbeatCallback, this);
             // if(is_odrive_alive() == true)
             // {
             //     std::cout << "Odrive is online" << std::endl;
@@ -59,31 +59,22 @@ namespace Steering_Column
             CLOSED_LOOP_CONTROL,
             LOCKIN_SPIN,
             ENCODER_DIR_FIND,
-        };
+        }OdriveAxisState;
+
+        enum class Odrive_Error_States{
+            ERROR,
+            OK
+        }OdriveErrorStates;
 
         private:
-
-            bool is_odrive_alive();
-
-            float Get_Voltage();
-            float Get_Current();
-            int   Get_Encoder_Count();
-            //float Get_Position_Estimate();
-            int   Get_Axis_State();
-            //int   Get_Error();
-
             void Set_Controller_Mode();
-
             double Calculate_Displacement(double desired_steer_angle);
 
         public:
-int   Get_Error();
-        void fast_startup();
-        void Startup_procedure();
-        void Set_Position(float position);
-        steering::Odrive_data return_data();
-        void Set_State(Odrive_Axis_States);
-        float Get_Position_Estimate();
+            void fast_startup();
+            void Startup_procedure();
+            void Set_Position(float position);
+            void Set_State(Odrive_Axis_States);
     };
 }
 

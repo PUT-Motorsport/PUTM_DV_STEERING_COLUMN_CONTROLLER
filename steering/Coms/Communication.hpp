@@ -6,16 +6,12 @@
 #include <actionlib/server/simple_action_server.h>
 #include "../Odrive/Odrive.hpp"
 
-#include "steering/Odrive_data.h"
-
 #include <sensor_msgs/Joy.h>
 #include <geometry_msgs/Twist.h>
 
 #include "std_msgs/String.h"
 
 namespace Communication{
-
-void data_thread();
 
 class SteeringAction{
     private:
@@ -55,16 +51,6 @@ class Joystick{
     {
         joy_sub_ = nj.subscribe<sensor_msgs::Joy>("joy", 10, &Joystick::joyCallback, this);
     }
-};
-class Data{
-
-    private:
-    ros::NodeHandle nd;
-    ros::Publisher Odrive_Data = nd.advertise<steering::Odrive_data>("Odrive_Data", 5);
-
-    public:
-    void Send_Data();
-    void data_thread();
 };
 
 }
