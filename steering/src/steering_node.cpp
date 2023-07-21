@@ -75,12 +75,12 @@ int main(int argc, char **argv)
                 /* FIXME: Tu rzuca wyjątkami */
                 cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Iq>();
                 ros::Duration(0.01).sleep();
-                OdriveHandler.Set_Position(OdriveHandler.position);
-                // if(OdriveHandler.OdriveAxisState != Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL)
-                // {
-                //     sem1.State = Communication::semafora::IDLING;
-                // }
-                // OdriveHandler.CheckForTimeout();
+                OdriveHandler.Set_Position(OdriveHandler.Position);
+                if(OdriveHandler.OdriveAxisState != Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL)
+                {
+                    sem1.State = Communication::semafora::IDLING;
+                }
+                OdriveHandler.CheckForTimeout();
             break;
 
             case Communication::semafora::ERROR:

@@ -14,7 +14,8 @@ extern Communication::semafora sem1;
 void Joystick::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
     float a = joy->axes[0];
-    Odrive_ptr->position = (-1*(joy->axes[0]));
+    Odrive_ptr->Position = (-19.5*(joy->axes[0]));
+    std::cout << Odrive_ptr->Position << '\n';
     std::cout << -1*(joy->axes[0]) << '\n';
     if(joy->buttons[0] == 1)
     {

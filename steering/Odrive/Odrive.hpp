@@ -26,7 +26,8 @@ namespace Steering_Column
             ros::Subscriber OdriveDataSubscriber;
             uint64_t timeout;
             static constexpr const uint64_t timeoutThreshold { 2 };
-            float position;
+            float Position;
+            float SteerAngle;
         //Callbacks
            void OdriveHeartbeatCallback(const PUTM_EV_ROS2CAN::Odrive::ConstPtr& OdriveData);
         T_Odrive()

@@ -2,6 +2,11 @@
 #include <iostream>
 #include <ros/ros.h>
 
+#include <chrono>
+#include <thread>
+#include <algorithm>
+
+#include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
 #include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
 using namespace std;
@@ -9,18 +14,24 @@ using namespace Steering_Column;
 
 PUTM_CAN::CanTx can_tx("slcan0");
 
+float CalculateDisplacement(float);
+float DiscalculateDisplacement(float);
+
 void T_Odrive::OdriveHeartbeatCallback(const PUTM_EV_ROS2CAN::Odrive::ConstPtr& OdriveData)
 {
     OdriveSimpleAxisError  = (Odrive_Axis_Errors)OdriveData->OdriveAxisError;
     OdriveAxisState  = (Odrive_Axis_States)OdriveData->OdriveAxisState;
     EncoderEstimate  = OdriveData->EncoderEstimation;
+
+    PUTM_EV_ROS2CAN::Odrive odriveRepublishData = *(OdriveData);
+    odriveRepublishData.SteerAngle = DiscalculateDisplacement(OdriveData->EncoderEstimation);
     timeout = ros::Time::now().toSec();
 }
 
-void T_Odrive::Set_Position(float position)
+void T_Odrive::Set_Position(float desiredSteerAngle)
 {   
     PUTM_CAN::Odrive_Set_Input_Position pos;   
-    pos.Input_Pos = position;
+    pos.Input_Pos = CalculateDisplacement(desiredSteerAngle);
     pos.Torque_FF = 0;
     pos.Vel_FF = 0;
     try{
@@ -111,4 +122,28 @@ bool T_Odrive::CheckForTimeout(){
         return false;
     }
     return true;
+}
+
+constexpr float MaxSteeringAngle = 19.5;
+constexpr float MaxTravelAngle = MaxSteeringAngle * 2;
+
+constexpr float OdriveLeftboundaries = -2.1;
+constexpr float OdriveRightboundaries = 2.3;
+
+constexpr float OdriveMaxTravelAngle = ((-OdriveLeftboundaries) + OdriveRightboundaries) * 360;
+constexpr float AngleRatio = OdriveMaxTravelAngle / MaxTravelAngle;
+constexpr float DisAngleRation = MaxTravelAngle / OdriveMaxTravelAngle;
+
+float CalculateDisplacement(float desired_steer_angle)
+{
+	desired_steer_angle = std::clamp(desired_steer_angle, (-MaxSteeringAngle), MaxSteeringAngle);
+	std::cout << "Desired steer angle = " << desired_steer_angle << '\n';
+	float calculatedPosition = desired_steer_angle * AngleRatio;
+	std::cout << "Calculated Position = " << calculatedPosition/360 << '\n';
+    return (calculatedPosition/360);
+}
+
+float DiscalculateDisplacement(float encoderEstimation)
+{
+    return encoderEstimation * DisAngleRation;
 }
