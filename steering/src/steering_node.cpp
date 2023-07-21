@@ -3,13 +3,12 @@
 #include "Terminal.hpp"
 
 #include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
+#include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
 #include <iostream>
 #include <string>
 #include <future>
 #include <thread>
-#define FMT_HEADER_ONLY
-#include <fmt/core.h>
 
 #include <chrono>
 
@@ -18,6 +17,8 @@ using namespace std;
 Communication::semafora sem1;
 Steering_Column::T_Odrive *Odrive_ptr;
 
+PUTM_CAN::CanTx cantx("slcan0");
+
 void Controll_Loop();
 
 int main(int argc, char **argv)
@@ -25,15 +26,14 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "steering_node");
     ros::Time::init();
 
+    ROS_INFO("Steering online");
+
     Communication::Joystick joy;
-    Steering_Column::T_Odrive Odrive;
-    Odrive_ptr = &Odrive;
+    Steering_Column::T_Odrive OdriveHandler;
+    Odrive_ptr = &OdriveHandler;
 
     thread Read(Read_Terminal_async);
 
-    ROS_INFO("Steering online");
-
-    Odrive.Startup_procedure();
     sem1.State = Communication::semafora::JOY_MODE;
 
     while(sem1.State != Communication::semafora::STOP)
@@ -42,8 +42,22 @@ int main(int argc, char **argv)
         switch(sem1.State)
         {
             case Communication::semafora::IDLING:
-                ros::Duration(1).sleep();
                 ROS_INFO("[Steering] waiting...");
+                ros::Duration(1).sleep();
+
+                cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Controller_Error>();
+                cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Encoder_Error>();
+                cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Motor_Error>();
+                
+                //ROS_INFO("Odrive State: %i, odrive error: %i", OdriveHandler.OdriveAxisState);
+
+                ros::spinOnce();
+
+                //ros::topic::waitForMessage<PUTM_EV_ROS2CAN::Odrive>("OdriveDataCAN",Odrive_ptr->OdriveNodeHandler);
+                //PUTM_CAN::Odrive_Clear_Errors cl;
+                //cantx.transmit<PUTM_CAN::Odrive_Clear_Errors>(cl);
+                //OdriveHandler.Startup_procedure();
+                //sem1.State = Communication::semafora::JOY_MODE;
             break;
             
             case Communication::semafora::RUNNING:
@@ -57,8 +71,16 @@ int main(int argc, char **argv)
 
             case Communication::semafora::JOY_MODE:
                 //Run in joystick mode
-                ros::spin();
-                ROS_INFO("[Steering] Encoder estimate: %f", Odrive.EncoderEstimate);
+                ros::spinOnce();
+                /* FIXME: Tu rzuca wyjątkami */
+                cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Iq>();
+                ros::Duration(0.01).sleep();
+                OdriveHandler.Set_Position(OdriveHandler.position);
+                // if(OdriveHandler.OdriveAxisState != Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL)
+                // {
+                //     sem1.State = Communication::semafora::IDLING;
+                // }
+                // OdriveHandler.CheckForTimeout();
             break;
 
             case Communication::semafora::ERROR:

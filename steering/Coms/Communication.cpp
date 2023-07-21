@@ -9,9 +9,20 @@ extern Steering_Column::T_Odrive *Odrive_ptr;
 
 using namespace Communication;
 
+extern Communication::semafora sem1;
+
 void Joystick::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
     float a = joy->axes[0];
-    Odrive_ptr->Set_Position(-2*(joy->axes[0]));
-    ROS_INFO("[Steering] joy:%f", a);
+    Odrive_ptr->position = (-1*(joy->axes[0]));
+    std::cout << -1*(joy->axes[0]) << '\n';
+    if(joy->buttons[0] == 1)
+    {
+        ROS_INFO("User calibration request");
+        Odrive_ptr->Startup_procedure();
+    }
+    else if(joy->buttons[1] == 1)
+    {
+        sem1.State = Communication::semafora::JOY_MODE;
+    }
 }
