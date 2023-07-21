@@ -12,12 +12,16 @@
 
 #include <chrono>
 
+#include "FSM.hpp"
+
 using namespace std;
 
 Communication::semafora sem1;
 Steering_Column::T_Odrive *Odrive_ptr;
 
 PUTM_CAN::CanTx cantx("slcan0");
+
+connection_fsm FSM;
 
 void Controll_Loop();
 

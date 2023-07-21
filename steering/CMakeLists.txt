@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(steering)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++17)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -125,6 +125,7 @@ include_directories(
 
 add_subdirectory(Odrive)
 add_subdirectory(Coms)
+add_subdirectory(FSM)
 
 ## Declare a C++ library
 #add_library(${PROJECT_NAME} src/Odrive.cpp src/Communication.cpp src/Terminal.cpp)
@@ -153,6 +154,7 @@ target_link_libraries(${PROJECT_NAME}_node
  ${catkin_LIBRARIES}
  Odrive
  Communication
+ fsm
 )
 
 #############
