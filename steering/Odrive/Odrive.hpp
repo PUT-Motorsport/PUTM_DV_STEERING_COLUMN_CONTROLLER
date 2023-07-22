@@ -7,7 +7,7 @@
 
 #include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
-#include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
+#include "putm_dv_can_to_ros/Odrive.h"
 
 #define POSITION_CONTROL_MODE           3
 #define TRAP_TRAJ_MODE                  5
@@ -29,11 +29,11 @@ namespace Steering_Column
             float Position;
             float SteerAngle;
         //Callbacks
-           void OdriveHeartbeatCallback(const PUTM_EV_ROS2CAN::Odrive::ConstPtr& OdriveData);
+           void OdriveHeartbeatCallback(const putm_dv_can_to_ros::Odrive::ConstPtr& OdriveData);
         T_Odrive()
         {
             //timeout = ros::Time::now().toSec();
-            OdriveDataSubscriber = OdriveNodeHandler.subscribe<PUTM_EV_ROS2CAN::Odrive>("OdriveDataCAN", 10, &T_Odrive::OdriveHeartbeatCallback, this);
+            OdriveDataSubscriber = OdriveNodeHandler.subscribe<putm_dv_can_to_ros::Odrive>("Odrive", 10, &T_Odrive::OdriveHeartbeatCallback, this);
             ros::spinOnce();
             while((OdriveAxisState != Odrive_Axis_States::IDLE) && (OdriveAxisState != Odrive_Axis_States::CLOSED_LOOP_CONTROL))
             {
@@ -112,5 +112,6 @@ namespace Steering_Column
             void Set_Position(float position);
             void Set_State(Odrive_Axis_States);
             bool CheckForTimeout();
+            void ClearError();
     };
 }

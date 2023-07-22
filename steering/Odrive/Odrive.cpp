@@ -6,25 +6,25 @@
 #include <thread>
 #include <algorithm>
 
-#include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
+#include "putm_dv_can_to_ros/Odrive.h"
 #include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
 using namespace std;
 using namespace Steering_Column;
 
-PUTM_CAN::CanTx can_tx("slcan0");
+PUTM_CAN::CanTx can_tx("can0");
 
 float CalculateDisplacement(float);
 float DiscalculateDisplacement(float);
 
-void T_Odrive::OdriveHeartbeatCallback(const PUTM_EV_ROS2CAN::Odrive::ConstPtr& OdriveData)
+void T_Odrive::OdriveHeartbeatCallback(const putm_dv_can_to_ros::Odrive::ConstPtr& OdriveData)
 {
-    OdriveSimpleAxisError  = (Odrive_Axis_Errors)OdriveData->OdriveAxisError;
-    OdriveAxisState  = (Odrive_Axis_States)OdriveData->OdriveAxisState;
-    EncoderEstimate  = OdriveData->EncoderEstimation;
+    OdriveSimpleAxisError  = (Odrive_Axis_Errors)OdriveData->odriveAxisError;
+    OdriveAxisState  = (Odrive_Axis_States)OdriveData->odriveAxisState;
+    EncoderEstimate  = OdriveData->encoderEstimation;
 
-    PUTM_EV_ROS2CAN::Odrive odriveRepublishData = *(OdriveData);
-    odriveRepublishData.SteerAngle = DiscalculateDisplacement(OdriveData->EncoderEstimation);
+    putm_dv_can_to_ros::Odrive odriveRepublishData = *(OdriveData);
+    odriveRepublishData.steerAngle = DiscalculateDisplacement(OdriveData->encoderEstimation);
     timeout = ros::Time::now().toSec();
 }
 
@@ -45,6 +45,7 @@ void T_Odrive::Set_Position(float desiredSteerAngle)
 }
 void T_Odrive::Startup_procedure()
 {
+    ClearError();
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::FULL_CALIBRATION_SEQUENCE);
     ros::Duration(15).sleep();
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
@@ -71,6 +72,7 @@ void T_Odrive::Startup_procedure()
             break;
         }
     }
+    sem1.State = Communication::semafora::JOY_MODE;
 }
 void T_Odrive::fast_startup()
 {
@@ -78,6 +80,12 @@ void T_Odrive::fast_startup()
     Set_State(Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL);
     Set_Controller_Mode();
     Set_Position(0);
+}
+
+void T_Odrive::ClearError()
+{
+    PUTM_CAN::Odrive_Clear_Errors errors{};
+    can_tx.transmit(errors);
 }
 
 void T_Odrive::Set_Controller_Mode()
@@ -137,9 +145,9 @@ constexpr float DisAngleRation = MaxTravelAngle / OdriveMaxTravelAngle;
 float CalculateDisplacement(float desired_steer_angle)
 {
 	desired_steer_angle = std::clamp(desired_steer_angle, (-MaxSteeringAngle), MaxSteeringAngle);
-	std::cout << "Desired steer angle = " << desired_steer_angle << '\n';
+	//std::cout << "Desired steer angle = " << desired_steer_angle << '\n';
 	float calculatedPosition = desired_steer_angle * AngleRatio;
-	std::cout << "Calculated Position = " << calculatedPosition/360 << '\n';
+	//std::cout << "Calculated Position = " << calculatedPosition/360 << '\n';
     return (calculatedPosition/360);
 }
 

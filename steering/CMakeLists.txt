@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg 
   actionlib_msgs
   actionlib
+  putm_dv_can_to_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -119,7 +120,7 @@ generate_messages(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
+# include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -131,13 +132,13 @@ add_subdirectory(Coms)
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-#add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/steering_node.cpp Coms/Communication.cpp Odrive/Odrive.cpp)
-
+## add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -149,6 +150,7 @@ add_executable(${PROJECT_NAME}_node src/steering_node.cpp Coms/Communication.cpp
 #add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+
 target_link_libraries(${PROJECT_NAME}_node
  ${catkin_LIBRARIES}
  Odrive

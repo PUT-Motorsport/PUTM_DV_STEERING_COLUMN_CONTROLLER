@@ -12,3 +12,4 @@ target_include_directories(Odrive
   ${CMAKE_CURRENT_LIST_DIR}
   )
 include_directories(src/Coms)
+include_directories(PUTM_DV_CAN_LIBRARY_RAII)

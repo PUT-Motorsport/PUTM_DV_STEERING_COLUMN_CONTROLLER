@@ -2,7 +2,9 @@
 #include "Communication.hpp"
 #include "Terminal.hpp"
 
-#include "/home/putm/catkin_ws/devel/include/PUTM_EV_ROS2CAN/Odrive.h"
+#include "ros/ros.h"
+
+#include "putm_dv_can_to_ros/Odrive.h"
 #include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
 #include <iostream>
@@ -17,7 +19,7 @@ using namespace std;
 Communication::semafora sem1;
 Steering_Column::T_Odrive *Odrive_ptr;
 
-PUTM_CAN::CanTx cantx("slcan0");
+PUTM_CAN::CanTx cantx("can0");
 
 void Controll_Loop();
 
@@ -48,14 +50,14 @@ int main(int argc, char **argv)
                 cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Controller_Error>();
                 cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Encoder_Error>();
                 cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Motor_Error>();
-                
+
                 //ROS_INFO("Odrive State: %i, odrive error: %i", OdriveHandler.OdriveAxisState);
 
                 ros::spinOnce();
 
                 //ros::topic::waitForMessage<PUTM_EV_ROS2CAN::Odrive>("OdriveDataCAN",Odrive_ptr->OdriveNodeHandler);
-                //PUTM_CAN::Odrive_Clear_Errors cl;
-                //cantx.transmit<PUTM_CAN::Odrive_Clear_Errors>(cl);
+                PUTM_CAN::Odrive_Clear_Errors cl;
+                cantx.transmit<PUTM_CAN::Odrive_Clear_Errors>(cl);
                 //OdriveHandler.Startup_procedure();
                 //sem1.State = Communication::semafora::JOY_MODE;
             break;
@@ -66,7 +68,6 @@ int main(int argc, char **argv)
 
             case Communication::semafora::STOP:
                 //End and go to idle.
-                
             break;
 
             case Communication::semafora::JOY_MODE:
