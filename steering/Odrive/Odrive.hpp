@@ -5,6 +5,8 @@
 #include "../Coms/Terminal.hpp"
 #include "../Coms/Communication.hpp"
 
+#include "std_msgs/Float64.h"
+
 #include "../PUTM_DV_CAN_LIBRARY_RAII/include/can_tx.hpp"
 
 #include "putm_dv_can_to_ros/Odrive.h"
@@ -23,17 +25,24 @@ namespace Steering_Column
         //Methods
         public:
             ros::NodeHandle OdriveNodeHandler;
+
             ros::Subscriber OdriveDataSubscriber;
+            ros::Subscriber steeringSubscriber;
+
             uint64_t timeout;
             static constexpr const uint64_t timeoutThreshold { 2 };
             float Position;
             float SteerAngle;
         //Callbacks
            void OdriveHeartbeatCallback(const putm_dv_can_to_ros::Odrive::ConstPtr& OdriveData);
+           void SteeringAngleCallback(const std_msgs::Float64::ConstPtr& str);
+
         T_Odrive()
         {
             //timeout = ros::Time::now().toSec();
             OdriveDataSubscriber = OdriveNodeHandler.subscribe<putm_dv_can_to_ros::Odrive>("Odrive", 10, &T_Odrive::OdriveHeartbeatCallback, this);
+            steeringSubscriber = OdriveNodeHandler.subscribe<std_msgs::Float64>("steering_angle", 1, &T_Odrive::SteeringAngleCallback, this);
+
             ros::spinOnce();
             while((OdriveAxisState != Odrive_Axis_States::IDLE) && (OdriveAxisState != Odrive_Axis_States::CLOSED_LOOP_CONTROL))
             {

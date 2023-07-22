@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 
     sem1.State = Communication::semafora::JOY_MODE;
 
-    while(sem1.State != Communication::semafora::STOP)
+    while( ros::ok() && sem1.State != Communication::semafora::STOP)
     {
         //apply
         switch(sem1.State)
@@ -62,16 +62,7 @@ int main(int argc, char **argv)
                 //sem1.State = Communication::semafora::JOY_MODE;
             break;
             
-            case Communication::semafora::RUNNING:
-                //Run controll loop.
-            break;
-
-            case Communication::semafora::STOP:
-                //End and go to idle.
-            break;
-
-            case Communication::semafora::JOY_MODE:
-                //Run in joystick mode
+            case Communication::semafora::AS_MODE:
                 ros::spinOnce();
                 /* FIXME: Tu rzuca wyjątkami */
                 cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Iq>();
@@ -82,6 +73,24 @@ int main(int argc, char **argv)
                     sem1.State = Communication::semafora::IDLING;
                 }
                 OdriveHandler.CheckForTimeout();
+                //Run controll loop.
+            break;
+
+            case Communication::semafora::STOP:
+                //End and go to idle.
+            break;
+
+            case Communication::semafora::JOY_MODE:
+                ros::spinOnce();
+                /* FIXME: Tu rzuca wyjątkami */
+                cantx.transmit_rtr<PUTM_CAN::Odrive_Get_Iq>();
+                ros::Duration(0.01).sleep();
+                OdriveHandler.Set_Position(OdriveHandler.Position);
+                // if(OdriveHandler.OdriveAxisState != Steering_Column::T_Odrive::Odrive_Axis_States::CLOSED_LOOP_CONTROL)
+                // {
+                //     sem1.State = Communication::semafora::IDLING;
+                // }
+                // OdriveHandler.CheckForTimeout();
             break;
 
             case Communication::semafora::ERROR:

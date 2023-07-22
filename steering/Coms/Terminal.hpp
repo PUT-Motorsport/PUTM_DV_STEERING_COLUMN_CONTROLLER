@@ -9,11 +9,12 @@ namespace Communication{
 
 struct semafora{
     enum RUN_STATES{
-        RUNNING,
         IDLING,
         STOP,
         JOY_MODE,
-        ERROR
+        ERROR,
+        RUNNING,
+        AS_MODE
     };
     RUN_STATES State {IDLING};
 };

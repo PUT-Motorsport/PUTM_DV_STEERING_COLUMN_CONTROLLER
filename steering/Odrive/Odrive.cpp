@@ -12,10 +12,20 @@
 using namespace std;
 using namespace Steering_Column;
 
+extern Communication::semafora sem1; 
+
 PUTM_CAN::CanTx can_tx("can0");
 
 float CalculateDisplacement(float);
 float DiscalculateDisplacement(float);
+
+void T_Odrive::SteeringAngleCallback(const std_msgs::Float64::ConstPtr& angle)
+{
+    if(sem1.State == Communication::semafora::AS_MODE)
+    {
+        Position = angle->data;
+    }
+}
 
 void T_Odrive::OdriveHeartbeatCallback(const putm_dv_can_to_ros::Odrive::ConstPtr& OdriveData)
 {
